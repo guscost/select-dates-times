@@ -1,0 +1,59 @@
+{
+  "name": "select-datetime-range",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rm -r ./dist && tsc -p ./tsconfig.build.json",
+    "prepublishOnly": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guscost/select-datetime-range.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/guscost/select-datetime-range/issues"
+  },
+  "homepage": "https://github.com/guscost/select-datetime-range#readme",
+  "devDependencies": {
+    "@chromatic-com/storybook": "^1.6.1",
+    "@storybook/addon-essentials": "^8.2.3",
+    "@storybook/addon-interactions": "^8.2.3",
+    "@storybook/addon-links": "^8.2.3",
+    "@storybook/addon-onboarding": "^8.2.3",
+    "@storybook/blocks": "^8.2.3",
+    "@storybook/react": "^8.2.3",
+    "@storybook/react-vite": "^8.2.3",
+    "@storybook/test": "^8.2.3",
+    "@types/node": "^20.14.10",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.39",
+    "prop-types": "^15.8.1",
+    "storybook": "^8.2.3",
+    "tailwindcss": "^3.4.5"
+  },
+  "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.1",
+    "@radix-ui/react-icons": "^1.3.0",
+    "@radix-ui/react-popover": "^1.1.1",
+    "@radix-ui/react-scroll-area": "^1.1.0",
+    "@radix-ui/react-select": "^2.1.1",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "date-fns": "^3.6.0",
+    "dayjs": "^1.11.12",
+    "react-day-picker": "^8.10.1",
+    "react-tooltip": "^5.8.3",
+    "tailwind-merge": "^2.4.0",
+    "tailwindcss-animate": "^1.0.7",
+    "viem": "^2.17.4"
+  }
+}

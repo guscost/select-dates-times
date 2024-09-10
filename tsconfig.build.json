@@ -1,0 +1,15 @@
+{
+  "exclude": ["./*.config.ts", "./data/*", "*/*.stories.tsx"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "skipLibCheck": true,
+    "strict": true,
+    "declaration": true,
+    "noImplicitAny": false,
+    "jsx": "react-jsx"
+  }
+}
