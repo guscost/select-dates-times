@@ -36,9 +36,7 @@ export type SelectDateTimeRangeProps = {
   quickOptions?: Array<{ label: string; range: DateRange }>;
   initialDateRange?: DateRange;
   showTimezone?: boolean;
-  onSelect?: (range: DateRange) => void;
-};
-export type PickDateTimeRangeProps = SelectDateTimeRangeProps & {
+  immediate?: boolean;
   onSelect: (range: DateRange) => void;
 };
 
@@ -51,6 +49,7 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
   quickOptions,
   initialDateRange,
   showTimezone,
+  immediate,
   onSelect,
 }) => {
   const now = new Date();
@@ -60,6 +59,13 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
       : new Date(now.valueOf() - 86400000 * 7),
     to: initialDateRange ? initialDateRange.to : now,
   });
+
+  const updateDateRange = (range: DateRange) => {
+    setDateRange(range);
+    if (immediate) {
+      onSelect(range);
+    }
+  };
 
   return (
     <>
@@ -76,7 +82,7 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
                     ? "text-gray-600"
                     : "text-gray-400 hover:text-gray-500"
                 }`}
-                onClick={() => setDateRange(option.range)}
+                onClick={() => updateDateRange(option.range)}
               >
                 {option.label}
               </div>
@@ -89,7 +95,7 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
           mode="range"
           defaultMonth={dateRange?.from}
           selected={dateRange}
-          onSelect={setDateRange}
+          onSelect={updateDateRange}
           numberOfMonths={2}
           captionLayout="dropdown-buttons"
           fromDate={EARLIEST_DATE}
@@ -160,7 +166,7 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
               }
               onChange={(e) => {
                 const value = dayjs(e.target.value).toDate();
-                setDateRange({
+                updateDateRange({
                   from: value,
                   to:
                     dateRange?.to && value > dateRange.to
@@ -186,7 +192,7 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
               }
               onChange={(e) => {
                 const value = dayjs(e.target.value).toDate();
-                setDateRange({
+                updateDateRange({
                   to: value,
                   from:
                     dateRange?.from && value < dateRange.from
@@ -203,7 +209,7 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
           TZ: {(dayjs as any)?.["tz"]?.guess()}
         </div>
       )}
-      {onSelect && (
+      {!immediate && (
         <div className="flex">
           <button
             onClick={() => onSelect(dateRange ?? { from: undefined })}

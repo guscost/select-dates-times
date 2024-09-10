@@ -1,17 +1,17 @@
-# select-datetime-range
+# select-dates-times
 
-Select a date/time range on desktop or mobile with ShadCN
+Select UI for dates and times, on desktop or mobile, with ShadCN
 
 ## Installation
 
 ```bash
-npm i -S select-datetime-range
+npm i -S select-dates-times
 
 ```
 
 ```tsx
 import { useState } from "react";
-import { PickDateTimeRange } from "select-datetime-range";
+import { PickDateTimeRange } from "select-dates-times";
 
 // Then render...
 export default const MyDateTimeRange = () => {
