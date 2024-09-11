@@ -8,7 +8,7 @@ import PickDateTimeRange, {
  * Picker to select or filter a range of dates, with times
  */
 export default {
-  title: "Components/SelecDateTimeRange",
+  title: "Components/SelectDateTimeRange",
   component: PickDateTimeRange,
   tags: ["autodocs"],
   parameters: {
