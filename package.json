@@ -47,9 +47,8 @@
     "@radix-ui/react-select": "^2.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "date-fns": "^3.6.0",
     "dayjs": "^1.11.13",
-    "react-day-picker": "^8.10.1",
+    "react-day-picker": "^9.0.9",
     "react-tooltip": "^5.28.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7"

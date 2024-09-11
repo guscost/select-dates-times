@@ -16,7 +16,7 @@ import {
 } from "../components/ui/popover";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
-import { Calendar } from "../components/ui/calendar";
+import { Calendar } from "./ui/calendar_v9";
 import { ScrollArea } from "./ui/scroll-area";
 import {
   Select,
@@ -92,29 +92,25 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
           </div>
         </div>
       ) : null}
-      <div className="-mx-3 mb-2">
+      <div className="mb-2">
         <Calendar
           mode="range"
           defaultMonth={dateRange?.from}
           selected={dateRange}
           onSelect={updateDateRange}
           numberOfMonths={2}
-          captionLayout="dropdown-buttons"
+          captionLayout="dropdown"
           fromDate={EARLIEST_DATE}
           toDate={LATEST_DATE}
           components={{
-            CaptionLabel: () => null,
             Dropdown: ({
               value,
+              options,
               onChange,
-              children,
               ...props
             }: DropdownProps) => {
-              const options = React.Children.toArray(
-                children,
-              ) as React.ReactElement<React.HTMLProps<HTMLOptionElement>>[];
               const selected = options.find(
-                (child) => child.props.value === value,
+                (option) => option.value === value,
               );
               const handleChange = (value: string) => {
                 const changeEvent = {
@@ -130,16 +126,16 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
                   }}
                 >
                   <SelectTrigger className="pr-0 -mr-3 sm:-mr-2.5 h-7 ring-0 focus:ring-0 shadow-none focus:shadow-none border-none focus:border-none">
-                    <SelectValue>{selected?.props?.children}</SelectValue>
+                    <SelectValue>{selected?.label}</SelectValue>
                   </SelectTrigger>
                   <SelectContent position="popper">
                     <ScrollArea className="h-80">
                       {options.map((option, id: number) => (
                         <SelectItem
-                          key={`${option.props.value}-${id}`}
-                          value={option.props.value?.toString() ?? ""}
+                          key={`${option.value}-${id}`}
+                          value={option.value?.toString() ?? ""}
                         >
-                          {option.props.children}
+                          {option.label}
                         </SelectItem>
                       ))}
                     </ScrollArea>
@@ -147,8 +143,6 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
                 </Select>
               );
             },
-            IconLeft: () => <ChevronLeftIcon className="h-4 w-4" />,
-            IconRight: () => <ChevronRightIcon className="h-4 w-4" />,
           }}
         />
       </div>
