@@ -53,17 +53,19 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
   onSelect,
 }) => {
   const now = new Date();
-  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+  const [dateRange, setDateRange] = useState<DateRange>({
     from: initialDateRange
       ? initialDateRange.from
       : new Date(now.valueOf() - 86400000 * 7),
     to: initialDateRange ? initialDateRange.to : now,
   });
 
-  const updateDateRange = (range: DateRange) => {
-    setDateRange(range);
-    if (immediate) {
-      onSelect(range);
+  const updateDateRange = (range?: DateRange) => {
+    if (range) {
+      setDateRange(range);
+      if (immediate) {
+        onSelect(range);
+      }
     }
   };
 

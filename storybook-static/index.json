@@ -1,20 +1,20 @@
 {
   "v": 5,
   "entries": {
-    "components-pickdatetimerange--docs": {
-      "id": "components-pickdatetimerange--docs",
-      "title": "Components/PickDateTimeRange",
+    "components-selecdatetimerange--docs": {
+      "id": "components-selecdatetimerange--docs",
+      "title": "Components/SelecDateTimeRange",
       "name": "Docs",
       "importPath": "./stories/SelectDateTimeRange.stories.tsx",
       "type": "docs",
       "tags": ["dev", "test", "autodocs"],
       "storiesImports": []
     },
-    "components-pickdatetimerange--default": {
+    "components-selecdatetimerange--default": {
       "type": "story",
-      "id": "components-pickdatetimerange--default",
+      "id": "components-selecdatetimerange--default",
       "name": "Default",
-      "title": "Components/PickDateTimeRange",
+      "title": "Components/SelecDateTimeRange",
       "importPath": "./stories/SelectDateTimeRange.stories.tsx",
       "componentPath": "./src/components/SelectDateTimeRange.tsx",
       "tags": ["dev", "test", "autodocs"]

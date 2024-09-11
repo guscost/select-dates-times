@@ -3,8 +3,8 @@ const __vite__mapDeps = (
   m = __vite__mapDeps,
   d = m.f ||
     (m.f = [
-      "./DocsRenderer-PKQXORMH-DOOPNc0i.js",
-      "./iframe-CREjThUb.js",
+      "./DocsRenderer-PKQXORMH-Cqa-iSzl.js",
+      "./iframe-CgjOyU8A.js",
       "./index-BwDkhjyp.js",
       "./_commonjsHelpers-BosuxZz1.js",
       "./react-18-4gMM97tQ.js",
@@ -14,7 +14,7 @@ const __vite__mapDeps = (
       "./index-DrFu-skq.js",
     ]),
 ) => i.map((i) => d[i]);
-import { _ as a } from "./iframe-CREjThUb.js";
+import { _ as a } from "./iframe-CgjOyU8A.js";
 import "../sb-preview/runtime.js";
 const { global: i } = __STORYBOOK_MODULE_GLOBAL__;
 var s = Object.entries(i.TAGS_OPTIONS ?? {}).reduce((e, r) => {
@@ -25,7 +25,7 @@ var s = Object.entries(i.TAGS_OPTIONS ?? {}).reduce((e, r) => {
     docs: {
       renderer: async () => {
         let { DocsRenderer: e } = await a(
-          () => import("./DocsRenderer-PKQXORMH-DOOPNc0i.js").then((r) => r.ai),
+          () => import("./DocsRenderer-PKQXORMH-Cqa-iSzl.js").then((r) => r.ai),
           __vite__mapDeps([0, 1, 2, 3, 4, 5, 6, 7, 8]),
           import.meta.url,
         );
