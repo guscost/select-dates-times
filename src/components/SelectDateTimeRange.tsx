@@ -160,7 +160,7 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
           <div className="flex align-center gap-1">
             <Input
               type="datetime-local"
-              className="cursor-text px-4 w-[168px] sm:w-[194px] text-xs sm:text-sm"
+              className="cursor-text px-2.5 sm:px-3.5 w-[168px] sm:w-[194px] text-xs sm:text-sm"
               value={
                 (dateRange?.from ?? {})
                   ? dayjs(dateRange?.from).format("YYYY-MM-DDTHH:mm")
@@ -186,7 +186,7 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
           <div className="flex align-center gap-1">
             <Input
               type="datetime-local"
-              className="cursor-text px-4 w-[168px] sm:w-[194px] text-xs sm:text-sm"
+              className="cursor-text px-2.5 sm:px-3.5 w-[168px] sm:w-[194px] text-xs sm:text-sm"
               value={
                 (dateRange?.to ?? "")
                   ? dayjs(dateRange?.to).format("YYYY-MM-DDTHH:mm")
