@@ -34,14 +34,15 @@ function Calendar({
         weekday:
           "text-muted-foreground rounded-md w-6 sm:w-7 text-xs sm:text-sm font-normal text-[0.8rem]",
         day: cn(
-          "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected].outside)]:bg-accent/50 [&:has([aria-selected].range-end)]:rounded-r-md",
+          "relative p-0 focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected].outside)]:bg-accent/50",
           props.mode === "range"
-            ? "[&:has(>.range-end)]:rounded-r-md [&:has(>.range-start)]:rounded-l-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md"
+            ? "[&.range-end]:rounded-r-md [&.range-start]:rounded-l-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md"
             : "[&:has([aria-selected])]:rounded-md",
         ),
         day_button: cn(
           buttonVariants({ variant: "ghost" }),
-          "h-6 w-6 sm:h-7 sm:w-7 text-xs sm:text-sm p-0 font-normal aria-selected:opacity-100",
+          "[&:hover]:bg-transparent [&:hover]:text-inherit", // Disable the ghost button hover
+          "h-6 w-6 sm:h-7 sm:w-7 p-0 text-xs sm:text-sm text-center font-normal",
         ),
         range_start: "range-start",
         range_end: "range-end",

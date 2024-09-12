@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  CalendarIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from "@radix-ui/react-icons";
+import { CalendarIcon } from "@radix-ui/react-icons";
 import { DateRange as WrappedDateRange, DropdownProps } from "react-day-picker";
 
 import dayjs from "dayjs";
@@ -109,9 +105,7 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
               onChange,
               ...props
             }: DropdownProps) => {
-              const selected = options.find(
-                (option) => option.value === value,
-              );
+              const selected = options.find((option) => option.value === value);
               const handleChange = (value: string) => {
                 const changeEvent = {
                   target: { value },
