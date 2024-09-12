@@ -52,7 +52,7 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
   return (
     <>
       {quickOptions?.length ? (
-        <div className="my-2">
+        <div className="mt-2 mb-4">
           <div className="text-sm mb-1 font-medium">Quick Options</div>
           <div className="flex gap-3 flex-wrap">
             {quickOptions.map((option, idx) => (
@@ -72,7 +72,7 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
           </div>
         </div>
       ) : null}
-      <div className="mb-2">
+      <div className="mb-4">
         <Calendar
           mode="range"
           defaultMonth={selectedDateRange?.from}
@@ -84,7 +84,7 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
           toDate={LATEST_DATE}
         />
       </div>
-      <div className="flex gap-4 mb-4">
+      <div className="flex gap-4 mb-2">
         <div className="w-1/2">
           <label className="block font-medium pb-1 text-sm">
             From Date & Time
@@ -139,12 +139,12 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
         </div>
       </div>
       {showTimezone && (
-        <div className="text-xs font-semibold text-gray-600 flex justify-end mb-4">
-          TZ: {(dayjs as any)?.["tz"]?.guess()}
+        <div className="text-xs text-gray-600 flex justify-end mb-2">
+          Time Zone: {(dayjs as any)?.["tz"]?.guess()}
         </div>
       )}
       {!immediate && (
-        <div className="flex">
+        <div className="flex mt-4">
           <button
             onClick={() => onSelect(selectedDateRange ?? { from: undefined })}
             className="py-2 w-full bg-primary text-white rounded-md"
