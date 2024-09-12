@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
-import { DateRange } from "../src/components/ui/calendar_v9";
-import SelectDateTimeRange from "../src/components/SelectDateTimeRange";
+import SelectDateTime from "../src/components/SelectDateTime";
 
 /**
  * Picker to select or filter a range of dates, with times
  */
 export default {
-  title: "Components/SelectDateTimeRange",
-  component: SelectDateTimeRange,
+  title: "Components/SelectDateTime",
+  component: SelectDateTime,
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
@@ -16,15 +15,15 @@ export default {
 } as Meta;
 
 const Template: StoryFn<any> = (args) => {
-  const [range, setRange] = useState<DateRange>();
+  const [timestamp, setTimestamp] = useState<Date>();
 
   return (
-    <SelectDateTimeRange
-      range={range}
+    <SelectDateTime
+      initialTimestamp={timestamp}
       align={args.align}
       quickOptions={args.quickOptions}
       showTimezone={args.showTimezone}
-      onSelect={setRange}
+      onSelect={setTimestamp}
     />
   );
 };
