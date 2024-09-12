@@ -27,7 +27,7 @@ export type PickDateTimeProps = {
 const EARLIEST_DATE = new Date(1900, 0, 1);
 const LATEST_DATE = new Date(2199, 11, 31);
 
-const PickDateTime: React.FC<PickDateTimeProps> = ({
+export const PickDateTime: React.FC<PickDateTimeProps> = ({
   timestamp,
   quickOptions,
   numberOfMonths,
