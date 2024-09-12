@@ -119,7 +119,10 @@ const SelectDateTime: React.FC<
   return (
     <Popover open={isOpen} onOpenChange={() => toggleOpen()}>
       <PopoverTrigger asChild>
-        <Button className="px-2" variant={timestamp ? "default" : "outline"}>
+        <Button
+          className="px-2"
+          variant={initialTimestamp ? "default" : "outline"}
+        >
           <CalendarIcon />
         </Button>
       </PopoverTrigger>
@@ -133,7 +136,10 @@ const SelectDateTime: React.FC<
         />
         <div className="flex mt-4">
           <button
-            onClick={() => onSelect(timestamp)}
+            onClick={() => {
+              setIsOpen(false);
+              onSelect(timestamp);
+            }}
             className="py-2 w-full bg-primary text-white rounded-md"
           >
             Done

@@ -2,14 +2,11 @@ import React, { useState } from "react";
 import { CalendarIcon } from "@radix-ui/react-icons";
 
 import dayjs from "dayjs";
-import timezone from "dayjs/plugin/timezone";
 
 import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar_v9";
 import { Input } from "./ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-
-dayjs.extend(timezone);
 
 export type PickDateProps = {
   date?: Date;
@@ -65,10 +62,10 @@ export const PickDate: React.FC<PickDateProps> = ({
       </div>
       <div className="flex gap-4 mb-2">
         <div className="w-full">
-          <label className="block font-medium pb-1 text-sm">Date & Time</label>
+          <label className="block font-medium pb-1 text-sm">Date</label>
           <div className="flex align-center gap-1">
             <Input
-              type="datetime-local"
+              type="date"
               className="cursor-text px-2.5 sm:px-3.5 w-[168px] sm:w-[194px] text-xs sm:text-sm"
               value={date ? dayjs(date).format("YYYY-MM-DDTHH:mm") : ""}
               onChange={(e) => {
@@ -100,7 +97,7 @@ const SelectDate: React.FC<
   return (
     <Popover open={isOpen} onOpenChange={() => toggleOpen()}>
       <PopoverTrigger asChild>
-        <Button className="px-2" variant={date ? "default" : "outline"}>
+        <Button className="px-2" variant={initialDate ? "default" : "outline"}>
           <CalendarIcon />
         </Button>
       </PopoverTrigger>
@@ -109,7 +106,10 @@ const SelectDate: React.FC<
         <PickDate date={date} quickOptions={quickOptions} onSelect={setDate} />
         <div className="flex mt-4">
           <button
-            onClick={() => onSelect(date)}
+            onClick={() => {
+              setIsOpen(false);
+              onSelect(date);
+            }}
             className="py-2 w-full bg-primary text-white rounded-md"
           >
             Done
