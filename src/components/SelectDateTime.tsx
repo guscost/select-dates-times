@@ -77,10 +77,7 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
               value={
                 timestamp ? dayjs(timestamp).format("YYYY-MM-DDTHH:mm") : ""
               }
-              onChange={(e) => {
-                const value = dayjs(e.target.value).toDate();
-                onSelect(timestamp && value > timestamp ? value : timestamp);
-              }}
+              onChange={(e) => onSelect(dayjs(e.target.value).toDate())}
             />
           </div>
         </div>

@@ -68,10 +68,7 @@ export const PickDate: React.FC<PickDateProps> = ({
               type="date"
               className="cursor-text px-2.5 sm:px-3.5 w-[168px] sm:w-[194px] text-xs sm:text-sm"
               value={date ? dayjs(date).format("YYYY-MM-DDTHH:mm") : ""}
-              onChange={(e) => {
-                const value = dayjs(e.target.value).toDate();
-                onSelect(date && value > date ? value : date);
-              }}
+              onChange={(e) => onSelect(dayjs(e.target.value).toDate())}
             />
           </div>
         </div>
