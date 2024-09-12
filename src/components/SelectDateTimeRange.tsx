@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { CalendarIcon } from "@radix-ui/react-icons";
-import { PopoverContentProps } from "@radix-ui/react-popover";
 
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
@@ -161,7 +160,7 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
 // Popover containing a SelectDateTimeRange
 const PickDateTimeRange: React.FC<
   Omit<SelectDateTimeRangeProps, "immediate"> & {
-    align: PopoverContentProps["align"];
+    align: "center" | "start" | "end";
   }
 > = ({ range, quickOptions, showTimezone, onSelect, align = "start" }) => {
   const [isOpen, setIsOpen] = useState(false);
