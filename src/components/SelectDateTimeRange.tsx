@@ -15,7 +15,7 @@ import { Calendar, DateRange } from "./ui/calendar_v9";
 
 dayjs.extend(timezone);
 
-export type SelectDateTimeRangeProps = {
+export type PickDateTimeRangeProps = {
   range?: DateRange;
   quickOptions?: Array<{ label: string; range: DateRange }>;
   showTimezone?: boolean;
@@ -26,7 +26,7 @@ export type SelectDateTimeRangeProps = {
 const EARLIEST_DATE = new Date(1900, 0, 1);
 const LATEST_DATE = new Date(2199, 11, 31);
 
-const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
+const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
   range,
   quickOptions,
   showTimezone,
@@ -157,9 +157,9 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
   );
 };
 
-// Popover containing a SelectDateTimeRange
-const PickDateTimeRange: React.FC<
-  Omit<SelectDateTimeRangeProps, "immediate"> & {
+// Popover containing a PickDateTimeRange
+const SelectDateTimeRange: React.FC<
+  Omit<PickDateTimeRangeProps, "immediate"> & {
     align: "center" | "start" | "end";
   }
 > = ({ range, quickOptions, showTimezone, onSelect, align = "start" }) => {
@@ -177,7 +177,7 @@ const PickDateTimeRange: React.FC<
       </PopoverTrigger>
 
       <PopoverContent align={align} className="p-3 pt-1 w-fit">
-        <SelectDateTimeRange
+        <PickDateTimeRange
           range={range}
           quickOptions={quickOptions}
           showTimezone={showTimezone}
@@ -191,4 +191,4 @@ const PickDateTimeRange: React.FC<
   );
 };
 
-export default PickDateTimeRange;
+export default SelectDateTimeRange;
