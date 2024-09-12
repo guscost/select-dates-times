@@ -37,10 +37,10 @@ function Calendar({
         month_caption:
           "flex -mx-3 mb-2 relative items-center text-sm font-medium",
         dropdowns: "flex",
-        nav: "absolute right-2 z-50",
+        nav: "absolute right-0 z-50",
         button_previous: "h-7 w-7",
         button_next: "h-7 w-7",
-        chevron: "h-5 w-5",
+        chevron: "h-4 w-4",
         weeks: "w-full border-collapse space-y-1",
         week: "flex w-full mt-2",
         weekdays: "flex",
@@ -72,7 +72,7 @@ function Calendar({
       }}
       components={{
         Dropdown: ({ value, options, onChange, ...props }: DropdownProps) => {
-          const selected = options.find((option) => option.value === value);
+          const selected = options?.find((option) => option.value === value);
           const handleChange = (value: string) => {
             const changeEvent = {
               target: { value },
@@ -91,7 +91,7 @@ function Calendar({
               </SelectTrigger>
               <SelectContent position="popper">
                 <ScrollArea className="h-80">
-                  {options.map((option, id: number) => (
+                  {options?.map((option, id: number) => (
                     <SelectItem
                       key={`${option.value}-${id}`}
                       value={option.value?.toString() ?? ""}

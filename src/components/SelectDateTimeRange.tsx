@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { CalendarIcon } from "@radix-ui/react-icons";
+import { PopoverContentProps } from "@radix-ui/react-popover";
 
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
@@ -17,9 +18,7 @@ dayjs.extend(timezone);
 
 export type SelectDateTimeRangeProps = {
   range?: DateRange;
-  align?: "center" | "end" | "start";
   quickOptions?: Array<{ label: string; range: DateRange }>;
-  initialDateRange?: DateRange;
   showTimezone?: boolean;
   immediate?: boolean;
   onSelect: (range: DateRange) => void;
@@ -30,24 +29,20 @@ const LATEST_DATE = new Date(2199, 11, 31);
 
 const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
   range,
-  align = "start",
   quickOptions,
-  initialDateRange,
   showTimezone,
   immediate,
   onSelect,
 }) => {
   const now = new Date();
-  const [dateRange, setDateRange] = useState<DateRange>({
-    from: initialDateRange
-      ? initialDateRange.from
-      : new Date(now.valueOf() - 86400000 * 7),
-    to: initialDateRange ? initialDateRange.to : now,
+  const [selectedDateRange, setSelectedDateRange] = useState<DateRange>({
+    from: range ? range.from : new Date(now.valueOf() - 86400000 * 7),
+    to: range ? range.to : now,
   });
 
   const updateDateRange = (range?: DateRange) => {
     if (range) {
-      setDateRange(range);
+      setSelectedDateRange(range);
       if (immediate) {
         onSelect(range);
       }
@@ -64,8 +59,8 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
               <div
                 key={idx}
                 className={`text-xs sm:text-sm font-medium cursor-pointer ${
-                  dateRange?.from === option.range?.from &&
-                  dateRange?.to === option.range?.to
+                  selectedDateRange?.from === option.range?.from &&
+                  selectedDateRange?.to === option.range?.to
                     ? "text-gray-600"
                     : "text-gray-400 hover:text-gray-500"
                 }`}
@@ -80,8 +75,8 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
       <div className="mb-2">
         <Calendar
           mode="range"
-          defaultMonth={dateRange?.from}
-          selected={dateRange}
+          defaultMonth={selectedDateRange?.from}
+          selected={selectedDateRange}
           onSelect={updateDateRange}
           numberOfMonths={2}
           captionLayout="dropdown"
@@ -99,8 +94,8 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
               type="datetime-local"
               className="cursor-text px-2.5 sm:px-3.5 w-[168px] sm:w-[194px] text-xs sm:text-sm"
               value={
-                (dateRange?.from ?? {})
-                  ? dayjs(dateRange?.from).format("YYYY-MM-DDTHH:mm")
+                (selectedDateRange?.from ?? {})
+                  ? dayjs(selectedDateRange?.from).format("YYYY-MM-DDTHH:mm")
                   : ""
               }
               onChange={(e) => {
@@ -108,9 +103,9 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
                 updateDateRange({
                   from: value,
                   to:
-                    dateRange?.to && value > dateRange.to
+                    selectedDateRange?.to && value > selectedDateRange.to
                       ? value
-                      : dateRange?.to,
+                      : selectedDateRange?.to,
                 });
               }}
             />
@@ -125,8 +120,8 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
               type="datetime-local"
               className="cursor-text px-2.5 sm:px-3.5 w-[168px] sm:w-[194px] text-xs sm:text-sm"
               value={
-                (dateRange?.to ?? "")
-                  ? dayjs(dateRange?.to).format("YYYY-MM-DDTHH:mm")
+                (selectedDateRange?.to ?? "")
+                  ? dayjs(selectedDateRange?.to).format("YYYY-MM-DDTHH:mm")
                   : ""
               }
               onChange={(e) => {
@@ -134,9 +129,9 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
                 updateDateRange({
                   to: value,
                   from:
-                    dateRange?.from && value < dateRange.from
+                    selectedDateRange?.from && value < selectedDateRange.from
                       ? value
-                      : dateRange?.from,
+                      : selectedDateRange?.from,
                 });
               }}
             />
@@ -151,7 +146,7 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
       {!immediate && (
         <div className="flex">
           <button
-            onClick={() => onSelect(dateRange ?? { from: undefined })}
+            onClick={() => onSelect(selectedDateRange ?? { from: undefined })}
             className="py-2 w-full bg-primary text-white rounded-md"
           >
             Done
@@ -162,15 +157,12 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
   );
 };
 
-// Select component (button icon popover wi date time range picker)
-const PickDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
-  range,
-  align = "start",
-  quickOptions,
-  initialDateRange,
-  showTimezone,
-  onSelect,
-}) => {
+// Popover containing a SelectDateTimeRange
+const PickDateTimeRange: React.FC<
+  Omit<SelectDateTimeRangeProps, "immediate"> & {
+    align: PopoverContentProps["align"];
+  }
+> = ({ range, quickOptions, showTimezone, onSelect, align = "start" }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleOpen = (value?: boolean) => {
     setIsOpen(value === undefined ? !isOpen : value);
@@ -187,9 +179,7 @@ const PickDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
       <PopoverContent align={align} className="p-3 pt-1 w-fit">
         <SelectDateTimeRange
           range={range}
-          align={align}
           quickOptions={quickOptions}
-          initialDateRange={initialDateRange}
           showTimezone={showTimezone}
           onSelect={(range) => {
             toggleOpen(false);
