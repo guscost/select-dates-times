@@ -2,25 +2,21 @@ import React, { useState } from "react";
 import { CalendarIcon } from "@radix-ui/react-icons";
 
 import { Button } from "./ui/button";
-import { Calendar } from "./ui/calendar_v9";
+import { Calendar, DateRange } from "./ui/calendar_v9";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
-export type PickDateProps = {
-  date?: Date;
-  quickOptions?: Array<{ label: string; date: Date }>;
-  numberOfMonths?: 1 | 2;
-  required?: boolean;
-  onSelect: (date: Date | undefined) => void;
+export type PickDateRangeProps = {
+  range?: DateRange;
+  quickOptions?: Array<{ label: string; range: DateRange }>;
+  onSelect: (range: DateRange | undefined) => void;
 };
 
 const EARLIEST_DATE = new Date(1900, 0, 1);
 const LATEST_DATE = new Date(2199, 11, 31);
 
-export const PickDate: React.FC<PickDateProps> = ({
-  date,
+export const PickDateRange: React.FC<PickDateRangeProps> = ({
+  range,
   quickOptions,
-  numberOfMonths,
-  required = false,
   onSelect,
 }) => {
   return (
@@ -33,9 +29,12 @@ export const PickDate: React.FC<PickDateProps> = ({
               <div
                 key={idx}
                 className={`text-xs sm:text-sm font-medium cursor-pointer ${
-                  date ? "text-gray-600" : "text-gray-400 hover:text-gray-500"
+                  range?.from === option.range?.from &&
+                  range?.to === option.range?.to
+                    ? "text-gray-600"
+                    : "text-gray-400 hover:text-gray-500"
                 }`}
-                onClick={() => onSelect(option.date)}
+                onClick={() => onSelect(option.range)}
               >
                 {option.label}
               </div>
@@ -45,51 +44,56 @@ export const PickDate: React.FC<PickDateProps> = ({
       ) : null}
       <div className="mb-4">
         <Calendar
-          mode="single" // Two calendars rendered for TypeScript to accept mode prop?
-          defaultMonth={date}
-          selected={date}
+          mode="range"
+          defaultMonth={range?.from}
+          selected={range}
           onSelect={onSelect}
-          numberOfMonths={numberOfMonths || 1}
+          numberOfMonths={2}
           captionLayout="dropdown"
           startMonth={EARLIEST_DATE}
           endMonth={LATEST_DATE}
           hidden={{ before: EARLIEST_DATE, after: LATEST_DATE }}
-          required={required}
+          required={false}
         />
       </div>
     </>
   );
 };
 
-// Popover containing a PickDate
-const SelectDate: React.FC<
-  Omit<PickDateProps, "date"> & {
-    align?: "center" | "start" | "end";
-    initialDate?: Date;
+// Popover containing a PickDateRange
+const SelectDateRange: React.FC<
+  Omit<PickDateRangeProps, "range"> & {
+    align: "center" | "start" | "end";
+    initialRange?: DateRange;
   }
-> = ({ initialDate, quickOptions, onSelect, align = "start" }) => {
+> = ({ initialRange, quickOptions, onSelect, align = "start" }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [date, setDate] = useState<Date | undefined>(initialDate);
-
   const toggleOpen = (value?: boolean) => {
     setIsOpen(value === undefined ? !isOpen : value);
   };
+  const [selectedDateRange, setSelectedDateRange] = useState<
+    DateRange | undefined
+  >(initialRange);
 
   return (
     <Popover open={isOpen} onOpenChange={() => toggleOpen()}>
       <PopoverTrigger asChild>
-        <Button className="px-2" variant={initialDate ? "default" : "outline"}>
+        <Button className="px-2" variant={initialRange ? "default" : "outline"}>
           <CalendarIcon />
         </Button>
       </PopoverTrigger>
 
       <PopoverContent align={align} className="p-3 pt-1 w-fit">
-        <PickDate date={date} quickOptions={quickOptions} onSelect={setDate} />
+        <PickDateRange
+          range={initialRange}
+          quickOptions={quickOptions}
+          onSelect={setSelectedDateRange}
+        />
         <div className="flex mt-4">
           <button
             onClick={() => {
-              setIsOpen(false);
-              onSelect(date);
+              toggleOpen(false);
+              onSelect(selectedDateRange ?? { from: undefined });
             }}
             className="py-2 w-full bg-primary text-white rounded-md"
           >
@@ -101,4 +105,4 @@ const SelectDate: React.FC<
   );
 };
 
-export default SelectDate;
+export default SelectDateRange;
