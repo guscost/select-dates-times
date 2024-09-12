@@ -51,7 +51,7 @@ function Calendar({
           "relative p-0 focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected].outside)]:bg-accent/50",
           props.mode === "range"
             ? "[&.range-end]:rounded-r-md [&.range-start]:rounded-l-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md"
-            : "[&:has([aria-selected])]:rounded-md",
+            : "rounded-md",
         ),
         day_button: cn(
           buttonVariants({ variant: "ghost" }),
