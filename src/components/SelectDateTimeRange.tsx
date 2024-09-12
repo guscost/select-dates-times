@@ -19,8 +19,7 @@ export type PickDateTimeRangeProps = {
   range?: DateRange;
   quickOptions?: Array<{ label: string; range: DateRange }>;
   showTimezone?: boolean;
-  immediate?: boolean;
-  onSelect: (range: DateRange) => void;
+  onSelect: (range: DateRange | undefined) => void;
 };
 
 const EARLIEST_DATE = new Date(1900, 0, 1);
@@ -30,24 +29,8 @@ const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
   range,
   quickOptions,
   showTimezone,
-  immediate,
   onSelect,
 }) => {
-  const now = new Date();
-  const [selectedDateRange, setSelectedDateRange] = useState<DateRange>({
-    from: range ? range.from : new Date(now.valueOf() - 86400000 * 7),
-    to: range ? range.to : now,
-  });
-
-  const updateDateRange = (range?: DateRange) => {
-    if (range) {
-      setSelectedDateRange(range);
-      if (immediate) {
-        onSelect(range);
-      }
-    }
-  };
-
   return (
     <>
       {quickOptions?.length ? (
@@ -58,12 +41,12 @@ const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
               <div
                 key={idx}
                 className={`text-xs sm:text-sm font-medium cursor-pointer ${
-                  selectedDateRange?.from === option.range?.from &&
-                  selectedDateRange?.to === option.range?.to
+                  range?.from === option.range?.from &&
+                  range?.to === option.range?.to
                     ? "text-gray-600"
                     : "text-gray-400 hover:text-gray-500"
                 }`}
-                onClick={() => updateDateRange(option.range)}
+                onClick={() => onSelect(option.range)}
               >
                 {option.label}
               </div>
@@ -74,14 +57,15 @@ const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
       <div className="mb-4">
         <Calendar
           mode="range"
-          defaultMonth={selectedDateRange?.from}
-          selected={selectedDateRange}
-          onSelect={updateDateRange}
+          defaultMonth={range?.from}
+          selected={range}
+          onSelect={onSelect}
           numberOfMonths={2}
           captionLayout="dropdown"
           startMonth={EARLIEST_DATE}
           endMonth={LATEST_DATE}
           hidden={{ before: EARLIEST_DATE, after: LATEST_DATE }}
+          required={false}
         />
       </div>
       <div className="flex gap-4 mb-2">
@@ -94,18 +78,15 @@ const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
               type="datetime-local"
               className="cursor-text px-2.5 sm:px-3.5 w-[168px] sm:w-[194px] text-xs sm:text-sm"
               value={
-                (selectedDateRange?.from ?? {})
-                  ? dayjs(selectedDateRange?.from).format("YYYY-MM-DDTHH:mm")
+                (range?.from ?? {})
+                  ? dayjs(range?.from).format("YYYY-MM-DDTHH:mm")
                   : ""
               }
               onChange={(e) => {
                 const value = dayjs(e.target.value).toDate();
-                updateDateRange({
+                onSelect({
                   from: value,
-                  to:
-                    selectedDateRange?.to && value > selectedDateRange.to
-                      ? value
-                      : selectedDateRange?.to,
+                  to: range?.to && value > range.to ? value : range?.to,
                 });
               }}
             />
@@ -120,18 +101,15 @@ const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
               type="datetime-local"
               className="cursor-text px-2.5 sm:px-3.5 w-[168px] sm:w-[194px] text-xs sm:text-sm"
               value={
-                (selectedDateRange?.to ?? "")
-                  ? dayjs(selectedDateRange?.to).format("YYYY-MM-DDTHH:mm")
+                (range?.to ?? "")
+                  ? dayjs(range?.to).format("YYYY-MM-DDTHH:mm")
                   : ""
               }
               onChange={(e) => {
                 const value = dayjs(e.target.value).toDate();
-                updateDateRange({
+                onSelect({
                   to: value,
-                  from:
-                    selectedDateRange?.from && value < selectedDateRange.from
-                      ? value
-                      : selectedDateRange?.from,
+                  from: range?.from && value < range.from ? value : range?.from,
                 });
               }}
             />
@@ -143,49 +121,57 @@ const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
           Time Zone: {(dayjs as any)?.["tz"]?.guess()}
         </div>
       )}
-      {!immediate && (
-        <div className="flex mt-4">
-          <button
-            onClick={() => onSelect(selectedDateRange ?? { from: undefined })}
-            className="py-2 w-full bg-primary text-white rounded-md"
-          >
-            Done
-          </button>
-        </div>
-      )}
     </>
   );
 };
 
 // Popover containing a PickDateTimeRange
 const SelectDateTimeRange: React.FC<
-  Omit<PickDateTimeRangeProps, "immediate"> & {
+  Omit<PickDateTimeRangeProps, "range"> & {
     align: "center" | "start" | "end";
+    initialRange?: DateRange;
   }
-> = ({ range, quickOptions, showTimezone, onSelect, align = "start" }) => {
+> = ({
+  initialRange,
+  quickOptions,
+  showTimezone,
+  onSelect,
+  align = "start",
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleOpen = (value?: boolean) => {
     setIsOpen(value === undefined ? !isOpen : value);
   };
+  const [selectedDateRange, setSelectedDateRange] = useState<
+    DateRange | undefined
+  >(initialRange);
 
   return (
     <Popover open={isOpen} onOpenChange={() => toggleOpen()}>
       <PopoverTrigger asChild>
-        <Button className="px-2" variant={range ? "default" : "outline"}>
+        <Button className="px-2" variant={initialRange ? "default" : "outline"}>
           <CalendarIcon />
         </Button>
       </PopoverTrigger>
 
       <PopoverContent align={align} className="p-3 pt-1 w-fit">
         <PickDateTimeRange
-          range={range}
+          range={initialRange}
           quickOptions={quickOptions}
           showTimezone={showTimezone}
-          onSelect={(range) => {
-            toggleOpen(false);
-            onSelect(range);
-          }}
+          onSelect={setSelectedDateRange}
         />
+        <div className="flex mt-4">
+          <button
+            onClick={() => {
+              toggleOpen(false);
+              onSelect(selectedDateRange ?? { from: undefined });
+            }}
+            className="py-2 w-full bg-primary text-white rounded-md"
+          >
+            Done
+          </button>
+        </div>
       </PopoverContent>
     </Popover>
   );

@@ -20,7 +20,7 @@ const Template: StoryFn<any> = (args) => {
 
   return (
     <SelectDateTimeRange
-      range={range}
+      initialRange={range}
       align={args.align}
       quickOptions={args.quickOptions}
       showTimezone={args.showTimezone}

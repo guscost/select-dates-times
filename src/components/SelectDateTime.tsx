@@ -20,6 +20,7 @@ export type PickDateTimeProps = {
   quickOptions?: Array<{ label: string; timestamp: Date }>;
   numberOfMonths?: 1 | 2;
   showTimezone?: boolean;
+  required?: boolean;
   onSelect: (datetime: Date | undefined) => void;
 };
 
@@ -31,6 +32,7 @@ const PickDateTime: React.FC<PickDateTimeProps> = ({
   quickOptions,
   numberOfMonths,
   showTimezone,
+  required = false,
   onSelect,
 }) => {
   return (
@@ -66,7 +68,7 @@ const PickDateTime: React.FC<PickDateTimeProps> = ({
           startMonth={EARLIEST_DATE}
           endMonth={LATEST_DATE}
           hidden={{ before: EARLIEST_DATE, after: LATEST_DATE }}
-          required={false}
+          required={required}
         />
       </div>
       <div className="flex gap-4 mb-2">
