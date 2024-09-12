@@ -1,11 +1,24 @@
 "use client";
 
 import * as React from "react";
-import { DayPicker } from "react-day-picker";
+import {
+  DateRange as WrappedDateRange,
+  DayPicker,
+  DropdownProps,
+} from "react-day-picker";
 
 import { cn } from "../../lib/utils";
 import { buttonVariants } from "./button";
+import { ScrollArea } from "./scroll-area";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./select";
 
+export type DateRange = WrappedDateRange;
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
 // ShadCN calendar updated for react-day-picker v9 and mobile sizing
@@ -20,9 +33,9 @@ function Calendar({
       showOutsideDays={showOutsideDays}
       className={className}
       classNames={{
-        months: "flex flex-row gap-4",
+        months: "flex gap-4",
         month_caption:
-          "flex -mx-2 mb-2 relative items-center text-sm font-medium",
+          "flex -mx-3 mb-2 relative items-center text-sm font-medium",
         dropdowns: "flex",
         nav: "absolute right-2 z-50",
         button_previous: "h-7 w-7",
@@ -56,6 +69,41 @@ function Calendar({
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
         hidden: "invisible",
         ...classNames,
+      }}
+      components={{
+        Dropdown: ({ value, options, onChange, ...props }: DropdownProps) => {
+          const selected = options.find((option) => option.value === value);
+          const handleChange = (value: string) => {
+            const changeEvent = {
+              target: { value },
+            } as React.ChangeEvent<HTMLSelectElement>;
+            onChange?.(changeEvent);
+          };
+          return (
+            <Select
+              value={value?.toString()}
+              onValueChange={(value) => {
+                handleChange(value);
+              }}
+            >
+              <SelectTrigger className="pr-0 -mr-3 sm:-mr-2.5 h-7 ring-0 focus:ring-0 shadow-none focus:shadow-none border-none focus:border-none">
+                <SelectValue>{selected?.label}</SelectValue>
+              </SelectTrigger>
+              <SelectContent position="popper">
+                <ScrollArea className="h-80">
+                  {options.map((option, id: number) => (
+                    <SelectItem
+                      key={`${option.value}-${id}`}
+                      value={option.value?.toString() ?? ""}
+                    >
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </ScrollArea>
+              </SelectContent>
+            </Select>
+          );
+        },
       }}
       {...props}
     />

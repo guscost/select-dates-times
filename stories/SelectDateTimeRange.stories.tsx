@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
-import PickDateTimeRange, {
-  DateRange,
-} from "../src/components/SelectDateTimeRange";
+import { DateRange } from "../src/components/ui/calendar_v9";
+import PickDateTimeRange from "../src/components/SelectDateTimeRange";
 
 /**
  * Picker to select or filter a range of dates, with times

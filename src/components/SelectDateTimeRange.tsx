@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { CalendarIcon } from "@radix-ui/react-icons";
-import { DateRange as WrappedDateRange, DropdownProps } from "react-day-picker";
 
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
@@ -12,19 +11,9 @@ import {
 } from "../components/ui/popover";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
-import { Calendar } from "./ui/calendar_v9";
-import { ScrollArea } from "./ui/scroll-area";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
+import { Calendar, DateRange } from "./ui/calendar_v9";
 
 dayjs.extend(timezone);
-
-export type DateRange = WrappedDateRange;
 
 export type SelectDateTimeRangeProps = {
   range?: DateRange;
@@ -98,46 +87,6 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
           captionLayout="dropdown"
           fromDate={EARLIEST_DATE}
           toDate={LATEST_DATE}
-          components={{
-            Dropdown: ({
-              value,
-              options,
-              onChange,
-              ...props
-            }: DropdownProps) => {
-              const selected = options.find((option) => option.value === value);
-              const handleChange = (value: string) => {
-                const changeEvent = {
-                  target: { value },
-                } as React.ChangeEvent<HTMLSelectElement>;
-                onChange?.(changeEvent);
-              };
-              return (
-                <Select
-                  value={value?.toString()}
-                  onValueChange={(value) => {
-                    handleChange(value);
-                  }}
-                >
-                  <SelectTrigger className="pr-0 -mr-3 sm:-mr-2.5 h-7 ring-0 focus:ring-0 shadow-none focus:shadow-none border-none focus:border-none">
-                    <SelectValue>{selected?.label}</SelectValue>
-                  </SelectTrigger>
-                  <SelectContent position="popper">
-                    <ScrollArea className="h-80">
-                      {options.map((option, id: number) => (
-                        <SelectItem
-                          key={`${option.value}-${id}`}
-                          value={option.value?.toString() ?? ""}
-                        >
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </ScrollArea>
-                  </SelectContent>
-                </Select>
-              );
-            },
-          }}
         />
       </div>
       <div className="flex gap-4 mb-4">
