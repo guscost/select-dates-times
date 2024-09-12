@@ -80,8 +80,9 @@ const SelectDateTimeRange: React.FC<SelectDateTimeRangeProps> = ({
           onSelect={updateDateRange}
           numberOfMonths={2}
           captionLayout="dropdown"
-          fromDate={EARLIEST_DATE}
-          toDate={LATEST_DATE}
+          startMonth={EARLIEST_DATE}
+          endMonth={LATEST_DATE}
+          hidden={{ before: EARLIEST_DATE, after: LATEST_DATE }}
         />
       </div>
       <div className="flex gap-4 mb-2">

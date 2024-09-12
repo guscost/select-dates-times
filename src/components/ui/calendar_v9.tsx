@@ -37,9 +37,9 @@ function Calendar({
         month_caption:
           "flex -mx-3 mb-2 relative items-center text-sm font-medium",
         dropdowns: "flex",
-        nav: "absolute right-0 z-50",
-        button_previous: "h-7 w-7",
-        button_next: "h-7 w-7",
+        nav: "absolute right-3 sm:right-0 z-50",
+        button_previous: "h-7 w-4 sm:w-7",
+        button_next: "h-7 w-4 sm:w-7",
         chevron: "h-4 w-4",
         weeks: "w-full border-collapse space-y-1",
         week: "flex w-full mt-2",
