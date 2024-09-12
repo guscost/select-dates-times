@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
-import SelectDateTime from "../src/components/SelectDateTime";
+import SelectDate from "../src/components/SelectDate";
 
 /**
  * Picker to select or filter a range of dates, with times
  */
 export default {
-  title: "Components/SelectDateTime",
-  component: SelectDateTime,
+  title: "Components/SelectDate",
+  component: SelectDate,
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
@@ -15,15 +15,14 @@ export default {
 } as Meta;
 
 const Template: StoryFn<any> = (args) => {
-  const [timestamp, setTimestamp] = useState<Date>();
+  const [date, setDate] = useState<Date>();
 
   return (
-    <SelectDateTime
-      initialTimestamp={timestamp}
+    <SelectDate
+      initialDate={date}
       align={args.align}
       quickOptions={args.quickOptions}
-      showTimezone={args.showTimezone}
-      onSelect={setTimestamp}
+      onSelect={setDate}
     />
   );
 };
@@ -37,11 +36,11 @@ Default.args = {
   quickOptions: [
     {
       label: "7 Days Ago",
-      timestamp: now - 86400000 * 7,
+      date: now - 86400000 * 7,
     },
     {
       label: "30 Days Ago",
-      timestamp: now - 86400000 * 30,
+      date: now - 86400000 * 30,
     },
   ],
   showTimezone: false,

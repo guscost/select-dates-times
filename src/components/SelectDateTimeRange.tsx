@@ -4,14 +4,10 @@ import { CalendarIcon } from "@radix-ui/react-icons";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "../components/ui/popover";
-import { Input } from "../components/ui/input";
-import { Button } from "../components/ui/button";
+import { Button } from "./ui/button";
 import { Calendar, DateRange } from "./ui/calendar_v9";
+import { Input } from "./ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 dayjs.extend(timezone);
 
