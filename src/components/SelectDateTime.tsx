@@ -121,6 +121,9 @@ const SelectDateTime: React.FC<
   );
 
   const toggleOpen = (value?: boolean) => {
+    if (isOpen) {
+      setTimestamp(initialTimestamp);
+    }
     setIsOpen(value === undefined ? !isOpen : value);
   };
 

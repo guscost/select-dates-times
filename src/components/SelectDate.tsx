@@ -72,6 +72,9 @@ const SelectDate: React.FC<
   const [date, setDate] = useState<Date | undefined>(initialDate);
 
   const toggleOpen = (value?: boolean) => {
+    if (isOpen) {
+      setDate(initialDate);
+    }
     setIsOpen(value === undefined ? !isOpen : value);
   };
 

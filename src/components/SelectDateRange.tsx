@@ -69,11 +69,14 @@ const SelectDateRange: React.FC<
 > = ({ initialRange, quickOptions, onSelect, align = "start" }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleOpen = (value?: boolean) => {
+    if (isOpen) {
+      setDateRange(initialRange);
+    }
     setIsOpen(value === undefined ? !isOpen : value);
   };
-  const [selectedDateRange, setSelectedDateRange] = useState<
-    DateRange | undefined
-  >(initialRange);
+  const [dateRange, setDateRange] = useState<DateRange | undefined>(
+    initialRange,
+  );
 
   return (
     <Popover open={isOpen} onOpenChange={() => toggleOpen()}>
@@ -85,15 +88,15 @@ const SelectDateRange: React.FC<
 
       <PopoverContent align={align} className="p-3 pt-1 w-fit">
         <PickDateRange
-          range={initialRange}
+          range={dateRange}
           quickOptions={quickOptions}
-          onSelect={setSelectedDateRange}
+          onSelect={setDateRange}
         />
         <div className="flex mt-4">
           <button
             onClick={() => {
               toggleOpen(false);
-              onSelect(selectedDateRange ?? { from: undefined });
+              onSelect(dateRange ?? { from: undefined });
             }}
             className="py-2 w-full bg-primary text-white rounded-md"
           >
