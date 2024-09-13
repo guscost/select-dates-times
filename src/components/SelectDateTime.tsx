@@ -58,7 +58,10 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
                     ? "text-gray-600"
                     : "text-gray-400 hover:text-gray-500"
                 }`}
-                onClick={() => onSelect(option.timestamp)}
+                onClick={() => {
+                  onSelect(option.timestamp);
+                  setMonth(option.timestamp);
+                }}
               >
                 {option.label}
               </div>

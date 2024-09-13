@@ -56,7 +56,10 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
                     ? "text-gray-600"
                     : "text-gray-400 hover:text-gray-500"
                 }`}
-                onClick={() => onSelect(option.range)}
+                onClick={() => {
+                  onSelect(option.range);
+                  setMonth(option.range.from);
+                }}
               >
                 {option.label}
               </div>

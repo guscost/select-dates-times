@@ -37,8 +37,8 @@ export const PickDateRange: React.FC<PickDateRangeProps> = ({
                     : "text-gray-400 hover:text-gray-500"
                 }`}
                 onClick={() => {
-                  setMonth(option.range.from);
                   onSelect(option.range);
+                  setMonth(option.range.from);
                 }}
               >
                 {option.label}
