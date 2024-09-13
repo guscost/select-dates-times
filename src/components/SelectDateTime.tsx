@@ -41,6 +41,8 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
   required = false,
   onSelect,
 }) => {
+  const [month, setMonth] = useState(timestamp);
+
   return (
     <>
       {quickOptions?.length ? (
@@ -66,7 +68,8 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
       <div className="mt-2 mb-4">
         <Calendar
           mode="single" // Two calendars rendered for TypeScript to accept mode prop?
-          defaultMonth={timestamp}
+          month={month}
+          onMonthChange={setMonth}
           selected={timestamp}
           onSelect={onSelect}
           numberOfMonths={numberOfMonths || 1}
@@ -86,7 +89,11 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
               value={
                 timestamp ? dayjs(timestamp).format("YYYY-MM-DDTHH:mm") : ""
               }
-              onChange={(e) => onSelect(dayjs(e.target.value).toDate())}
+              onChange={(e) => {
+                const value = dayjs(e.target.value).toDate();
+                setMonth(value);
+                onSelect(value);
+              }}
               onClick={(e) => e.preventDefault()}
               onFocus={(e) => e.preventDefault()}
             />

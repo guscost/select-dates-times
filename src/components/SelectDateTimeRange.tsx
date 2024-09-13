@@ -28,6 +28,8 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
   showTimezone,
   onSelect,
 }) => {
+  const [month, setMonth] = useState(range?.from);
+
   return (
     <>
       {quickOptions?.length ? (
@@ -54,7 +56,8 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
       <div className="mt-2 mb-4">
         <Calendar
           mode="range"
-          defaultMonth={range?.from}
+          month={month}
+          onMonthChange={setMonth}
           selected={range}
           onSelect={onSelect}
           numberOfMonths={2}
@@ -78,6 +81,7 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
               }
               onChange={(e) => {
                 const value = dayjs(e.target.value).toDate();
+                setMonth(value);
                 onSelect({
                   from: value,
                   to: range?.to && value > range.to ? value : range?.to,
@@ -100,6 +104,7 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
               }
               onChange={(e) => {
                 const value = dayjs(e.target.value).toDate();
+                setMonth(value);
                 onSelect({
                   to: value,
                   from: range?.from && value < range.from ? value : range?.from,
