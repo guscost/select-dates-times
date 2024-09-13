@@ -20,8 +20,8 @@ import { SelectDateTimeRange } from "select-dates-times";
 // Then render...
 export default const MyDateTimeRangePicker = () => {
     const [range, setRange] = useState({
-        start: new Date() - 86400000,
-        end: new Date(),
+        from: new Date() - 86400000,
+        to: new Date(),
     });
     return (
         <SelectDateTimeRange initialRange={range} onSelect={setRange} />
