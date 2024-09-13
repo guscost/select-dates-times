@@ -53,7 +53,7 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
               <div
                 key={idx}
                 className={`text-xs sm:text-sm font-medium cursor-pointer ${
-                  timestamp
+                  timestamp === option.timestamp
                     ? "text-gray-600"
                     : "text-gray-400 hover:text-gray-500"
                 }`}

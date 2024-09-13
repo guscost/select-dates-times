@@ -33,7 +33,9 @@ export const PickDate: React.FC<PickDateProps> = ({
               <div
                 key={idx}
                 className={`text-xs sm:text-sm font-medium cursor-pointer ${
-                  date ? "text-gray-600" : "text-gray-400 hover:text-gray-500"
+                  date === option.date
+                    ? "text-gray-600"
+                    : "text-gray-400 hover:text-gray-500"
                 }`}
                 onClick={() => onSelect(option.date)}
               >
