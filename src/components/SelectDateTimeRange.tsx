@@ -85,6 +85,8 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
                   to: range?.to && value > range.to ? value : range?.to,
                 });
               }}
+              onClick={(e) => e.preventDefault()}
+              onFocus={(e) => e.preventDefault()}
             />
           </div>
         </div>
@@ -108,6 +110,8 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
                   from: range?.from && value < range.from ? value : range?.from,
                 });
               }}
+              onClick={(e) => e.preventDefault()}
+              onFocus={(e) => e.preventDefault()}
             />
           </div>
         </div>
