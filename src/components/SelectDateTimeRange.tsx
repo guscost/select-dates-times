@@ -8,6 +8,7 @@ import { Button } from "./ui/button";
 import { Calendar, DateRange } from "./ui/calendar_v9";
 import { Input } from "./ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { TimeInput } from "./SelectDateTime";
 
 dayjs.extend(timezone);
 
@@ -66,10 +67,7 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
       </div>
       <div className="flex gap-4 mb-2">
         <div className="w-1/2">
-          <label className="block font-medium pb-1 text-sm">
-            From Date & Time
-          </label>
-          <div className="flex align-center gap-1">
+          <TimeInput label="From Date & Time">
             <Input
               type="datetime-local"
               className="cursor-text px-2.5 sm:px-3.5 w-[168px] sm:w-[194px] text-xs sm:text-sm"
@@ -88,13 +86,10 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
               onClick={(e) => e.preventDefault()}
               onFocus={(e) => e.preventDefault()}
             />
-          </div>
+          </TimeInput>
         </div>
         <div className="w-1/2">
-          <label className="block font-medium pb-1 text-sm">
-            To Date & Time
-          </label>
-          <div className="flex align-center gap-1">
+          <TimeInput label="To Date & Time">
             <Input
               type="datetime-local"
               className="cursor-text px-2.5 sm:px-3.5 w-[168px] sm:w-[194px] text-xs sm:text-sm"
@@ -113,7 +108,7 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
               onClick={(e) => e.preventDefault()}
               onFocus={(e) => e.preventDefault()}
             />
-          </div>
+          </TimeInput>
         </div>
       </div>
       {showTimezone && (

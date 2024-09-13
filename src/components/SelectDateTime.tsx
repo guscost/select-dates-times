@@ -23,6 +23,16 @@ export type PickDateTimeProps = {
 const EARLIEST_DATE = new Date(1900, 0, 1);
 const LATEST_DATE = new Date(2199, 11, 31);
 
+export const TimeInput: React.FC<{
+  label: string;
+  children: React.ReactNode;
+}> = ({ label, children }) => (
+  <>
+    <label className="block font-medium pb-1 text-sm">{label}</label>
+    <div className="flex align-center gap-1">{children}</div>{" "}
+  </>
+);
+
 export const PickDateTime: React.FC<PickDateTimeProps> = ({
   timestamp,
   quickOptions,
@@ -69,8 +79,7 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
       </div>
       <div className="flex gap-4 mb-2">
         <div className="w-full">
-          <label className="block font-medium pb-1 text-sm">Date & Time</label>
-          <div className="flex align-center gap-1">
+          <TimeInput label="Date & Time">
             <Input
               type="datetime-local"
               className="cursor-text px-2.5 sm:px-3.5 w-[168px] sm:w-[194px] text-xs sm:text-sm"
@@ -81,7 +90,7 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
               onClick={(e) => e.preventDefault()}
               onFocus={(e) => e.preventDefault()}
             />
-          </div>
+          </TimeInput>
         </div>
       </div>
       {showTimezone && (
