@@ -23,6 +23,8 @@ export const PickDate: React.FC<PickDateProps> = ({
   required = false,
   onSelect,
 }) => {
+  const [month, setMonth] = useState(date);
+
   return (
     <>
       {quickOptions?.length ? (
@@ -37,7 +39,10 @@ export const PickDate: React.FC<PickDateProps> = ({
                     ? "text-gray-600"
                     : "text-gray-400 hover:text-gray-500"
                 }`}
-                onClick={() => onSelect(option.date)}
+                onClick={() => {
+                  setMonth(option.date);
+                  onSelect(option.date);
+                }}
               >
                 {option.label}
               </div>
@@ -48,7 +53,8 @@ export const PickDate: React.FC<PickDateProps> = ({
       <div className="mt-2 mb-4">
         <Calendar
           mode="single" // Two calendars rendered for TypeScript to accept mode prop?
-          defaultMonth={date}
+          month={month}
+          onMonthChange={setMonth}
           selected={date}
           onSelect={onSelect}
           numberOfMonths={numberOfMonths || 1}

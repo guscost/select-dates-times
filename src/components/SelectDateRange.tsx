@@ -19,6 +19,8 @@ export const PickDateRange: React.FC<PickDateRangeProps> = ({
   quickOptions,
   onSelect,
 }) => {
+  const [month, setMonth] = useState(range?.from);
+
   return (
     <>
       {quickOptions?.length ? (
@@ -34,7 +36,10 @@ export const PickDateRange: React.FC<PickDateRangeProps> = ({
                     ? "text-gray-600"
                     : "text-gray-400 hover:text-gray-500"
                 }`}
-                onClick={() => onSelect(option.range)}
+                onClick={() => {
+                  setMonth(option.range.from);
+                  onSelect(option.range);
+                }}
               >
                 {option.label}
               </div>
@@ -45,7 +50,8 @@ export const PickDateRange: React.FC<PickDateRangeProps> = ({
       <div className="mt-2 mb-4">
         <Calendar
           mode="range"
-          defaultMonth={range?.from}
+          month={month}
+          onMonthChange={setMonth}
           selected={range}
           onSelect={onSelect}
           numberOfMonths={2}
