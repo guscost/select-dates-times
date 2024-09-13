@@ -4,6 +4,7 @@ import { CalendarIcon } from "@radix-ui/react-icons";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 
+import { cn } from "../lib/utils";
 import { Button } from "./ui/button";
 import { Calendar, DateRange } from "./ui/calendar_v9";
 import { Input } from "./ui/input";
@@ -29,6 +30,16 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
   onSelect,
 }) => {
   const [month, setMonth] = useState(range?.from);
+
+  function initializeRange() {
+    if (!range) {
+      const now = new Date();
+      onSelect({
+        from: new Date(now.valueOf() - 86400000),
+        to: now,
+      });
+    }
+  }
 
   return (
     <>
@@ -73,7 +84,10 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
           <TimeInput label="From Date & Time">
             <Input
               type="datetime-local"
-              className="cursor-text px-2.5 sm:px-3.5 w-[168px] sm:w-[194px] text-xs sm:text-sm"
+              className={cn(
+                "cursor-text px-2.5 sm:px-3.5 w-[168px] sm:w-[194px] text-xs sm:text-sm",
+                !range?.from && "text-transparent",
+              )}
               value={
                 (range?.from ?? {})
                   ? dayjs(range?.from).format("YYYY-MM-DDTHH:mm")
@@ -88,7 +102,10 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
                 });
               }}
               onClick={(e) => e.preventDefault()}
-              onFocus={(e) => e.preventDefault()}
+              onFocus={(e) => {
+                e.preventDefault();
+                initializeRange();
+              }}
             />
           </TimeInput>
         </div>
@@ -96,7 +113,10 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
           <TimeInput label="To Date & Time">
             <Input
               type="datetime-local"
-              className="cursor-text px-2.5 sm:px-3.5 w-[168px] sm:w-[194px] text-xs sm:text-sm"
+              className={cn(
+                "cursor-text px-2.5 sm:px-3.5 w-[168px] sm:w-[194px] text-xs sm:text-sm",
+                !range?.to && "text-transparent",
+              )}
               value={
                 (range?.to ?? "")
                   ? dayjs(range?.to).format("YYYY-MM-DDTHH:mm")
@@ -111,7 +131,10 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
                 });
               }}
               onClick={(e) => e.preventDefault()}
-              onFocus={(e) => e.preventDefault()}
+              onFocus={(e) => {
+                e.preventDefault();
+                initializeRange();
+              }}
             />
           </TimeInput>
         </div>

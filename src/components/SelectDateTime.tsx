@@ -4,6 +4,7 @@ import { CalendarIcon } from "@radix-ui/react-icons";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 
+import { cn } from "../lib/utils";
 import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar_v9";
 import { Input } from "./ui/input";
@@ -85,7 +86,10 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
           <TimeInput label="Date & Time">
             <Input
               type="datetime-local"
-              className="cursor-text px-2.5 sm:px-3.5 w-[168px] sm:w-[194px] text-xs sm:text-sm"
+              className={cn(
+                "cursor-text px-2.5 sm:px-3.5 w-[168px] sm:w-[194px] text-xs sm:text-sm",
+                !timestamp && "text-transparent",
+              )}
               value={
                 timestamp ? dayjs(timestamp).format("YYYY-MM-DDTHH:mm") : ""
               }
@@ -95,7 +99,12 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
                 onSelect(value);
               }}
               onClick={(e) => e.preventDefault()}
-              onFocus={(e) => e.preventDefault()}
+              onFocus={(e) => {
+                e.preventDefault();
+                if (!timestamp) {
+                  onSelect(new Date());
+                }
+              }}
             />
           </TimeInput>
         </div>
