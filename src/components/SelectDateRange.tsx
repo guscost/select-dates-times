@@ -69,7 +69,7 @@ const SelectDateRange: React.FC<
 > = ({ initialRange, quickOptions, onSelect, align = "start" }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = (value?: boolean) => {
-    if (isOpen) {
+    if (!isOpen) {
       setDateRange(initialRange);
     }
     setIsOpen(value === undefined ? !isOpen : value);
@@ -95,8 +95,8 @@ const SelectDateRange: React.FC<
         <div className="flex mt-4">
           <button
             onClick={() => {
-              toggle(false);
               onSelect(dateRange ?? { from: undefined });
+              toggle(false);
             }}
             className="py-2 w-full bg-primary text-white rounded-md"
           >

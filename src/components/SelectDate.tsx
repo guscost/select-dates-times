@@ -72,7 +72,7 @@ const SelectDate: React.FC<
   const [date, setDate] = useState<Date | undefined>(initialDate);
 
   const toggle = (value?: boolean) => {
-    if (isOpen) {
+    if (!isOpen) {
       setDate(initialDate);
     }
     setIsOpen(value === undefined ? !isOpen : value);
@@ -91,8 +91,8 @@ const SelectDate: React.FC<
         <div className="flex mt-4">
           <button
             onClick={() => {
-              toggle(false);
               onSelect(date);
+              toggle(false);
             }}
             className="py-2 w-full bg-primary text-white rounded-md"
           >

@@ -121,7 +121,7 @@ const SelectDateTime: React.FC<
   );
 
   const toggle = (value?: boolean) => {
-    if (isOpen) {
+    if (!isOpen) {
       setTimestamp(initialTimestamp);
     }
     setIsOpen(value === undefined ? !isOpen : value);
@@ -148,8 +148,8 @@ const SelectDateTime: React.FC<
         <div className="flex mt-4">
           <button
             onClick={() => {
-              toggle(false);
               onSelect(timestamp);
+              toggle(false);
             }}
             className="py-2 w-full bg-primary text-white rounded-md"
           >

@@ -135,7 +135,7 @@ const SelectDateTimeRange: React.FC<
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = (value?: boolean) => {
-    if (isOpen) {
+    if (!isOpen) {
       setTimestampRange(initialRange);
     }
     setIsOpen(value === undefined ? !isOpen : value);
@@ -162,8 +162,8 @@ const SelectDateTimeRange: React.FC<
         <div className="flex mt-4">
           <button
             onClick={() => {
-              toggle(false);
               onSelect(timestampRange ?? { from: undefined });
+              toggle(false);
             }}
             className="py-2 w-full bg-primary text-white rounded-md"
           >
