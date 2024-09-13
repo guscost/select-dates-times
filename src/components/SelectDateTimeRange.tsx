@@ -31,7 +31,7 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
   return (
     <>
       {quickOptions?.length ? (
-        <div className="mt-2 mb-4">
+        <div className="my-2">
           <div className="text-sm mb-1 font-medium">Quick Options</div>
           <div className="flex gap-3 flex-wrap">
             {quickOptions.map((option, idx) => (
@@ -51,7 +51,7 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
           </div>
         </div>
       ) : null}
-      <div className="mb-4">
+      <div className="mt-2 mb-4">
         <Calendar
           mode="range"
           defaultMonth={range?.from}

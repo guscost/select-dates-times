@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import { DateRange } from "../src/components/ui/calendar_v9";
-import SelectDateRange from "../src/components/SelectDateRange";
+import SelectDateRange, {
+  PickDateRange,
+} from "../src/components/SelectDateRange";
 
 /**
  * Select a range of dates
@@ -18,7 +20,13 @@ export default {
 const Template: StoryFn<any> = (args) => {
   const [range, setRange] = useState<DateRange>();
 
-  return (
+  return args.render === "picker" ? (
+    <PickDateRange
+      range={range}
+      quickOptions={args.quickOptions}
+      onSelect={setRange}
+    />
+  ) : (
     <SelectDateRange
       initialRange={range}
       align={args.align}
@@ -28,11 +36,18 @@ const Template: StoryFn<any> = (args) => {
   );
 };
 
-export const Default = Template.bind({});
-
 const now = new Date().valueOf();
 
+export const Default = Template.bind({});
+export const QuickOptions = Template.bind({});
+export const Picker = Template.bind({});
+
 Default.args = {
+  align: "start",
+  quickOptions: [],
+};
+
+QuickOptions.args = {
   align: "start",
   quickOptions: [
     {
@@ -44,4 +59,8 @@ Default.args = {
       range: { from: now - 86400000 * 30, to: now },
     },
   ],
+};
+
+Picker.args = {
+  render: "picker",
 };

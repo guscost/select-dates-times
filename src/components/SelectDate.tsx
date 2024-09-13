@@ -26,7 +26,7 @@ export const PickDate: React.FC<PickDateProps> = ({
   return (
     <>
       {quickOptions?.length ? (
-        <div className="mt-2 mb-4">
+        <div className="my-2">
           <div className="text-sm mb-1 font-medium">Quick Options</div>
           <div className="flex gap-3 flex-wrap">
             {quickOptions.map((option, idx) => (
@@ -43,7 +43,7 @@ export const PickDate: React.FC<PickDateProps> = ({
           </div>
         </div>
       ) : null}
-      <div className="mb-4">
+      <div className="mt-2 mb-4">
         <Calendar
           mode="single" // Two calendars rendered for TypeScript to accept mode prop?
           defaultMonth={date}
