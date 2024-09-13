@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
-import SelectDate from "../src/components/SelectDate";
+import SelectDate, { PickDate } from "../src/components/SelectDate";
 
 /**
  * Select a date
@@ -16,8 +16,9 @@ export default {
 
 const Template: StoryFn<any> = (args) => {
   const [date, setDate] = useState<Date>();
-
-  return (
+  return args.render === "picker" ? (
+    <PickDate date={date} quickOptions={args.quickOptions} onSelect={setDate} />
+  ) : (
     <SelectDate
       initialDate={date}
       align={args.align}
@@ -27,11 +28,17 @@ const Template: StoryFn<any> = (args) => {
   );
 };
 
-export const Default = Template.bind({});
-
 const now = new Date().valueOf();
+export const Basic = Template.bind({});
+export const QuickOptions = Template.bind({});
+export const Picker = Template.bind({});
 
-Default.args = {
+Basic.args = {
+  align: "start",
+  quickOptions: [],
+};
+
+QuickOptions.args = {
   align: "start",
   quickOptions: [
     {
@@ -44,4 +51,8 @@ Default.args = {
     },
   ],
   showTimezone: false,
+};
+
+Picker.args = {
+  render: "picker",
 };

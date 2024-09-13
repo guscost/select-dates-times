@@ -37,12 +37,11 @@ const Template: StoryFn<any> = (args) => {
 };
 
 const now = new Date().valueOf();
-
-export const Default = Template.bind({});
+export const Basic = Template.bind({});
 export const QuickOptions = Template.bind({});
 export const Picker = Template.bind({});
 
-Default.args = {
+Basic.args = {
   align: "start",
   quickOptions: [],
 };
