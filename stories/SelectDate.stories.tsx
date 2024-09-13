@@ -3,7 +3,7 @@ import { Meta, StoryFn } from "@storybook/react";
 import SelectDate from "../src/components/SelectDate";
 
 /**
- * Picker to select or filter a date
+ * Select a date
  */
 export default {
   title: "Components/SelectDate",

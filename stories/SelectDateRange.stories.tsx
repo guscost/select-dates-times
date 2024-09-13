@@ -4,7 +4,7 @@ import { DateRange } from "../src/components/ui/calendar_v9";
 import SelectDateRange from "../src/components/SelectDateRange";
 
 /**
- * Picker to select or filter a range of dates
+ * Select a range of dates
  */
 export default {
   title: "Components/SelectDateRange",
