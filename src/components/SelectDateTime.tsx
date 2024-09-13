@@ -120,7 +120,7 @@ const SelectDateTime: React.FC<
     initialTimestamp,
   );
 
-  const toggleOpen = (value?: boolean) => {
+  const toggle = (value?: boolean) => {
     if (isOpen) {
       setTimestamp(initialTimestamp);
     }
@@ -128,7 +128,7 @@ const SelectDateTime: React.FC<
   };
 
   return (
-    <Popover open={isOpen} onOpenChange={() => toggleOpen()}>
+    <Popover open={isOpen} onOpenChange={toggle}>
       <PopoverTrigger asChild>
         <Button
           className="px-2"
@@ -148,7 +148,7 @@ const SelectDateTime: React.FC<
         <div className="flex mt-4">
           <button
             onClick={() => {
-              setIsOpen(false);
+              toggle(false);
               onSelect(timestamp);
             }}
             className="py-2 w-full bg-primary text-white rounded-md"

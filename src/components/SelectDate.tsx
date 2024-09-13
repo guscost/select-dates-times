@@ -71,7 +71,7 @@ const SelectDate: React.FC<
   const [isOpen, setIsOpen] = useState(false);
   const [date, setDate] = useState<Date | undefined>(initialDate);
 
-  const toggleOpen = (value?: boolean) => {
+  const toggle = (value?: boolean) => {
     if (isOpen) {
       setDate(initialDate);
     }
@@ -79,7 +79,7 @@ const SelectDate: React.FC<
   };
 
   return (
-    <Popover open={isOpen} onOpenChange={() => toggleOpen()}>
+    <Popover open={isOpen} onOpenChange={toggle}>
       <PopoverTrigger asChild>
         <Button className="px-2" variant={initialDate ? "default" : "outline"}>
           <CalendarIcon />
@@ -91,7 +91,7 @@ const SelectDate: React.FC<
         <div className="flex mt-4">
           <button
             onClick={() => {
-              setIsOpen(false);
+              toggle(false);
               onSelect(date);
             }}
             className="py-2 w-full bg-primary text-white rounded-md"

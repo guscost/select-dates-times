@@ -68,7 +68,7 @@ const SelectDateRange: React.FC<
   }
 > = ({ initialRange, quickOptions, onSelect, align = "start" }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const toggleOpen = (value?: boolean) => {
+  const toggle = (value?: boolean) => {
     if (isOpen) {
       setDateRange(initialRange);
     }
@@ -79,7 +79,7 @@ const SelectDateRange: React.FC<
   );
 
   return (
-    <Popover open={isOpen} onOpenChange={() => toggleOpen()}>
+    <Popover open={isOpen} onOpenChange={toggle}>
       <PopoverTrigger asChild>
         <Button className="px-2" variant={initialRange ? "default" : "outline"}>
           <CalendarIcon />
@@ -95,7 +95,7 @@ const SelectDateRange: React.FC<
         <div className="flex mt-4">
           <button
             onClick={() => {
-              toggleOpen(false);
+              toggle(false);
               onSelect(dateRange ?? { from: undefined });
             }}
             className="py-2 w-full bg-primary text-white rounded-md"
