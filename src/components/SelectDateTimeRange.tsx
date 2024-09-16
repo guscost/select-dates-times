@@ -88,7 +88,7 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
             <Input
               type="datetime-local"
               className={cn(
-                "cursor-text px-2.5 sm:px-3.5 w-[168px] sm:w-[194px] text-xs sm:text-sm",
+                "cursor-text px-3 sm:px-4 w-[168px] sm:w-[194px] text-xs sm:text-sm",
                 !range?.from && "text-transparent",
               )}
               value={
@@ -117,7 +117,7 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
             <Input
               type="datetime-local"
               className={cn(
-                "cursor-text px-2.5 sm:px-3.5 w-[168px] sm:w-[194px] text-xs sm:text-sm",
+                "cursor-text px-3 sm:px-4 w-[168px] sm:w-[194px] text-xs sm:text-sm",
                 !range?.to && "text-transparent",
               )}
               value={
