@@ -59,6 +59,14 @@
   }
 }
 
+/* TODO: Look for a standard way to position like this */
+.sb-show-main {
+  align-items: flex-start !important;
+}
+#storybook-root {
+  margin: 64px !important;
+}
+
 @layer base {
   * {
     @apply border-border;
