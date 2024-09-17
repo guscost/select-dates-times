@@ -44,6 +44,13 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
 }) => {
   const [month, setMonth] = useState(timestamp);
 
+  function initializeTimestamp(e) {
+    e.preventDefault();
+    if (!timestamp) {
+      onSelect(new Date());
+    }
+  }
+
   return (
     <>
       {quickOptions?.length ? (
@@ -101,13 +108,8 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
                 setMonth(value);
                 onSelect(value);
               }}
-              onClick={(e) => e.preventDefault()}
-              onFocus={(e) => {
-                e.preventDefault();
-                if (!timestamp) {
-                  onSelect(new Date());
-                }
-              }}
+              onClick={initializeTimestamp}
+              onFocus={initializeTimestamp}
             />
           </TimeInput>
         </div>

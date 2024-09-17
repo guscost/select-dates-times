@@ -31,7 +31,8 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
 }) => {
   const [month, setMonth] = useState(range?.from);
 
-  function initializeRange() {
+  function initializeRange(e) {
+    e.preventDefault();
     if (!range) {
       const now = new Date();
       onSelect({
@@ -92,9 +93,7 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
                 !range?.from && "text-transparent",
               )}
               value={
-                (range?.from ?? {})
-                  ? dayjs(range?.from).format("YYYY-MM-DDTHH:mm")
-                  : ""
+                range?.from ? dayjs(range?.from).format("YYYY-MM-DDTHH:mm") : ""
               }
               onChange={(e) => {
                 const value = dayjs(e.target.value).toDate();
@@ -104,11 +103,8 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
                   to: range?.to && value > range.to ? value : range?.to,
                 });
               }}
-              onClick={(e) => e.preventDefault()}
-              onFocus={(e) => {
-                e.preventDefault();
-                initializeRange();
-              }}
+              onClick={initializeRange}
+              onFocus={initializeRange}
             />
           </TimeInput>
         </div>
@@ -121,9 +117,7 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
                 !range?.to && "text-transparent",
               )}
               value={
-                (range?.to ?? "")
-                  ? dayjs(range?.to).format("YYYY-MM-DDTHH:mm")
-                  : ""
+                range?.to ? dayjs(range?.to).format("YYYY-MM-DDTHH:mm") : ""
               }
               onChange={(e) => {
                 const value = dayjs(e.target.value).toDate();
@@ -133,11 +127,8 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
                   from: range?.from && value < range.from ? value : range?.from,
                 });
               }}
-              onClick={(e) => e.preventDefault()}
-              onFocus={(e) => {
-                e.preventDefault();
-                initializeRange();
-              }}
+              onClick={initializeRange}
+              onFocus={initializeRange}
             />
           </TimeInput>
         </div>
