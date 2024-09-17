@@ -38,7 +38,8 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
   function initializeTimestamp(e) {
     e.preventDefault();
     if (!timestamp) {
-      onSelect(new Date());
+      const now = dayjs().toDate();
+      onSelect(now);
     }
   }
 

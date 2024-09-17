@@ -31,10 +31,9 @@ export const PickDateRange: React.FC<PickDateRangeProps> = ({
   function initializeRange(e) {
     e.preventDefault();
     if (!range) {
-      onSelect({
-        from: dayjs().startOf("day").subtract(7, "days").toDate(),
-        to: dayjs().startOf("day").toDate(),
-      });
+      const to = dayjs().startOf("day").toDate();
+      const from = dayjs(to).subtract(7, "days").toDate();
+      onSelect({ from, to });
     }
   }
 

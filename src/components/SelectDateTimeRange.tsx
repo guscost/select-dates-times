@@ -34,11 +34,9 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
   function initializeRange(e) {
     e.preventDefault();
     if (!range) {
-      const now = new Date();
-      onSelect({
-        from: new Date(now.valueOf() - 86400000),
-        to: now,
-      });
+      const to = dayjs().toDate();
+      const from = dayjs(to).subtract(7, "days").toDate();
+      onSelect({ from, to });
     }
   }
 
