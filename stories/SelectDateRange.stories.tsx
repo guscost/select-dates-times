@@ -17,13 +17,14 @@ export default {
   },
 } as Meta;
 
-const Template: StoryFn<any> = (args) => {
+const Template: StoryFn<typeof SelectDateRange> = (args) => {
   const [range, setRange] = useState<DateRange>();
 
-  return args.render === "picker" ? (
+  return args["render"] === "picker" ? (
     <PickDateRange
       range={range}
       quickOptions={args.quickOptions}
+      showInputs={args.showInputs}
       onSelect={setRange}
     />
   ) : (
@@ -31,6 +32,7 @@ const Template: StoryFn<any> = (args) => {
       initialRange={range}
       align={args.align}
       quickOptions={args.quickOptions}
+      showInputs={args.showInputs}
       onSelect={setRange}
     />
   );
@@ -39,6 +41,7 @@ const Template: StoryFn<any> = (args) => {
 const now = new Date().valueOf();
 export const Basic = Template.bind({});
 export const QuickOptions = Template.bind({});
+export const WithInputs = Template.bind({});
 export const Picker = Template.bind({});
 
 Basic.args = {
@@ -58,6 +61,10 @@ QuickOptions.args = {
       range: { from: now - 86400000 * 30, to: now },
     },
   ],
+};
+
+WithInputs.args = {
+  showInputs: true,
 };
 
 Picker.args = {

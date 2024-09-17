@@ -9,7 +9,7 @@ import { Button } from "./ui/button";
 import { Calendar, DateRange } from "./ui/calendar_v9";
 import { Input } from "./ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { TimeInput } from "./SelectDateTime";
+import { PickerInput } from "./SelectDate";
 
 dayjs.extend(timezone);
 
@@ -85,7 +85,7 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
       </div>
       <div className="flex gap-4 mb-2">
         <div className="w-1/2">
-          <TimeInput label="From Date & Time">
+          <PickerInput label="From Date & Time">
             <Input
               type="datetime-local"
               className={cn(
@@ -106,10 +106,10 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
               onClick={initializeRange}
               onFocus={initializeRange}
             />
-          </TimeInput>
+          </PickerInput>
         </div>
         <div className="w-1/2">
-          <TimeInput label="To Date & Time">
+          <PickerInput label="To Date & Time">
             <Input
               type="datetime-local"
               className={cn(
@@ -130,7 +130,7 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
               onClick={initializeRange}
               onFocus={initializeRange}
             />
-          </TimeInput>
+          </PickerInput>
         </div>
       </div>
       {showTimezone && (
@@ -145,15 +145,15 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
 // Popover containing a PickDateTimeRange
 const SelectDateTimeRange: React.FC<
   Omit<PickDateTimeRangeProps, "range"> & {
-    align: "center" | "start" | "end";
     initialRange?: DateRange;
+    align: "center" | "start" | "end";
   }
 > = ({
   initialRange,
+  align = "start",
   quickOptions,
   showTimezone,
   onSelect,
-  align = "start",
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = (value?: boolean) => {

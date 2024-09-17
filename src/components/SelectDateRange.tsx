@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { CalendarIcon } from "@radix-ui/react-icons";
 
+import dayjs from "dayjs";
+
+import { cn } from "../lib/utils";
 import { Button } from "./ui/button";
 import { Calendar, DateRange } from "./ui/calendar_v9";
+import { Input } from "./ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { PickerInput } from "./SelectDate";
 
 export type PickDateRangeProps = {
   range?: DateRange;
   quickOptions?: Array<{ label: string; range: DateRange }>;
+  showInputs?: boolean;
   onSelect: (range: DateRange | undefined) => void;
 };
 
@@ -17,9 +23,20 @@ const LATEST_DATE = new Date(2199, 11, 31);
 export const PickDateRange: React.FC<PickDateRangeProps> = ({
   range,
   quickOptions,
+  showInputs,
   onSelect,
 }) => {
   const [month, setMonth] = useState(range?.from);
+
+  function initializeRange(e) {
+    e.preventDefault();
+    if (!range) {
+      onSelect({
+        from: dayjs().startOf("day").subtract(7, "days").toDate(),
+        to: dayjs().startOf("day").toDate(),
+      });
+    }
+  }
 
   return (
     <>
@@ -62,6 +79,57 @@ export const PickDateRange: React.FC<PickDateRangeProps> = ({
           required={false}
         />
       </div>
+      {showInputs && (
+        <div className="flex gap-4 mb-2">
+          <div className="w-1/2">
+            <PickerInput label="From Date">
+              <Input
+                type="date"
+                className={cn(
+                  "cursor-text px-3 sm:px-4 w-[100px] sm:w-[120px] text-xs sm:text-sm",
+                  !range?.from && "text-transparent",
+                )}
+                value={
+                  range?.from ? dayjs(range?.from).format("YYYY-MM-DD") : ""
+                }
+                onChange={(e) => {
+                  const value = dayjs(e.target.value).toDate();
+                  setMonth(value);
+                  onSelect({
+                    from: value,
+                    to: range?.to && value > range.to ? value : range?.to,
+                  });
+                }}
+                onClick={initializeRange}
+                onFocus={initializeRange}
+              />
+            </PickerInput>
+          </div>
+          <div className="w-1/2">
+            <PickerInput label="To Date">
+              <Input
+                type="date"
+                className={cn(
+                  "cursor-text px-3 sm:px-4 w-[100px] sm:w-[120px] text-xs sm:text-sm",
+                  !range?.to && "text-transparent",
+                )}
+                value={range?.to ? dayjs(range?.to).format("YYYY-MM-DD") : ""}
+                onChange={(e) => {
+                  const value = dayjs(e.target.value).toDate();
+                  setMonth(value);
+                  onSelect({
+                    to: value,
+                    from:
+                      range?.from && value < range.from ? value : range?.from,
+                  });
+                }}
+                onClick={initializeRange}
+                onFocus={initializeRange}
+              />
+            </PickerInput>
+          </div>
+        </div>
+      )}
     </>
   );
 };
@@ -69,10 +137,10 @@ export const PickDateRange: React.FC<PickDateRangeProps> = ({
 // Popover containing a PickDateRange
 const SelectDateRange: React.FC<
   Omit<PickDateRangeProps, "range"> & {
-    align: "center" | "start" | "end";
     initialRange?: DateRange;
+    align: "center" | "start" | "end";
   }
-> = ({ initialRange, quickOptions, onSelect, align = "start" }) => {
+> = ({ initialRange, align = "start", quickOptions, showInputs, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = (value?: boolean) => {
     if (!isOpen) {
@@ -96,6 +164,7 @@ const SelectDateRange: React.FC<
         <PickDateRange
           range={dateRange}
           quickOptions={quickOptions}
+          showInputs={showInputs}
           onSelect={setDateRange}
         />
         <div className="flex mt-4">

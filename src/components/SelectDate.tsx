@@ -1,15 +1,30 @@
 import React, { useState } from "react";
 import { CalendarIcon } from "@radix-ui/react-icons";
 
+import dayjs from "dayjs";
+
+import { cn } from "../lib/utils";
 import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar_v9";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Input } from "./ui/input";
+
+export const PickerInput: React.FC<{
+  label: string;
+  children: React.ReactNode;
+}> = ({ label, children }) => (
+  <>
+    <label className="block font-medium pb-1 text-sm">{label}</label>
+    <div className="flex align-center gap-1">{children}</div>{" "}
+  </>
+);
 
 export type PickDateProps = {
   date?: Date;
   quickOptions?: Array<{ label: string; date: Date }>;
   numberOfMonths?: 1 | 2;
   required?: boolean;
+  showInput?: boolean;
   onSelect: (date: Date | undefined) => void;
 };
 
@@ -21,9 +36,18 @@ export const PickDate: React.FC<PickDateProps> = ({
   quickOptions,
   numberOfMonths,
   required = false,
+  showInput = false,
   onSelect,
 }) => {
   const [month, setMonth] = useState(date);
+
+  function initializeDate(e) {
+    e.preventDefault();
+    if (!date) {
+      const today = dayjs().startOf("day").toDate();
+      onSelect(today);
+    }
+  }
 
   return (
     <>
@@ -65,6 +89,29 @@ export const PickDate: React.FC<PickDateProps> = ({
           required={required}
         />
       </div>
+      {showInput && (
+        <div className="flex gap-4 mb-2">
+          <div className="w-full">
+            <PickerInput label="Date">
+              <Input
+                type="date"
+                className={cn(
+                  "cursor-text px-3 sm:px-4 w-[100px] sm:w-[120px] text-xs sm:text-sm",
+                  !date && "text-transparent",
+                )}
+                value={date ? dayjs(date).format("YYYY-MM-DDTHH:mm") : ""}
+                onChange={(e) => {
+                  const value = dayjs(e.target.value).toDate();
+                  setMonth(value);
+                  onSelect(value);
+                }}
+                onClick={initializeDate}
+                onFocus={initializeDate}
+              />
+            </PickerInput>
+          </div>
+        </div>
+      )}
     </>
   );
 };
@@ -72,10 +119,10 @@ export const PickDate: React.FC<PickDateProps> = ({
 // Popover containing a PickDate
 const SelectDate: React.FC<
   Omit<PickDateProps, "date"> & {
-    align?: "center" | "start" | "end";
     initialDate?: Date;
+    align?: "center" | "start" | "end";
   }
-> = ({ initialDate, quickOptions, onSelect, align = "start" }) => {
+> = ({ initialDate, align = "start", quickOptions, showInput, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [date, setDate] = useState<Date | undefined>(initialDate);
 
@@ -95,7 +142,12 @@ const SelectDate: React.FC<
       </PopoverTrigger>
 
       <PopoverContent align={align} className="p-3 pt-1 w-fit">
-        <PickDate date={date} quickOptions={quickOptions} onSelect={setDate} />
+        <PickDate
+          date={date}
+          quickOptions={quickOptions}
+          showInput={showInput}
+          onSelect={setDate}
+        />
         <div className="flex mt-4">
           <button
             onClick={() => {

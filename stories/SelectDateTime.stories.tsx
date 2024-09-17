@@ -14,10 +14,10 @@ export default {
   },
 } as Meta;
 
-const Template: StoryFn<any> = (args) => {
+const Template: StoryFn<typeof SelectDateTime> = (args) => {
   const [timestamp, setTimestamp] = useState<Date>();
 
-  return args.render === "picker" ? (
+  return args["render"] === "picker" ? (
     <PickDateTime
       timestamp={timestamp}
       quickOptions={args.quickOptions}

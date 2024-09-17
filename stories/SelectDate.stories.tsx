@@ -14,15 +14,21 @@ export default {
   },
 } as Meta;
 
-const Template: StoryFn<any> = (args) => {
+const Template: StoryFn<typeof SelectDate> = (args) => {
   const [date, setDate] = useState<Date>();
-  return args.render === "picker" ? (
-    <PickDate date={date} quickOptions={args.quickOptions} onSelect={setDate} />
+  return args["render"] === "picker" ? (
+    <PickDate
+      date={date}
+      quickOptions={args.quickOptions}
+      showInput={args.showInput}
+      onSelect={setDate}
+    />
   ) : (
     <SelectDate
       initialDate={date}
       align={args.align}
       quickOptions={args.quickOptions}
+      showInput={args.showInput}
       onSelect={setDate}
     />
   );
@@ -31,6 +37,7 @@ const Template: StoryFn<any> = (args) => {
 const now = new Date().valueOf();
 export const Basic = Template.bind({});
 export const QuickOptions = Template.bind({});
+export const WithInput = Template.bind({});
 export const Picker = Template.bind({});
 
 Basic.args = {
@@ -51,6 +58,10 @@ QuickOptions.args = {
     },
   ],
   showTimezone: false,
+};
+
+WithInput.args = {
+  showInput: true,
 };
 
 Picker.args = {

@@ -9,6 +9,7 @@ import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar_v9";
 import { Input } from "./ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { PickerInput } from "./SelectDate";
 
 dayjs.extend(timezone);
 
@@ -23,16 +24,6 @@ export type PickDateTimeProps = {
 
 const EARLIEST_DATE = new Date(1900, 0, 1);
 const LATEST_DATE = new Date(2199, 11, 31);
-
-export const TimeInput: React.FC<{
-  label: string;
-  children: React.ReactNode;
-}> = ({ label, children }) => (
-  <>
-    <label className="block font-medium pb-1 text-sm">{label}</label>
-    <div className="flex align-center gap-1">{children}</div>{" "}
-  </>
-);
 
 export const PickDateTime: React.FC<PickDateTimeProps> = ({
   timestamp,
@@ -93,7 +84,7 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
       </div>
       <div className="flex gap-4 mb-2">
         <div className="w-full">
-          <TimeInput label="Date & Time">
+          <PickerInput label="Date & Time">
             <Input
               type="datetime-local"
               className={cn(
@@ -111,7 +102,7 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
               onClick={initializeTimestamp}
               onFocus={initializeTimestamp}
             />
-          </TimeInput>
+          </PickerInput>
         </div>
       </div>
       {showTimezone && (
@@ -126,15 +117,15 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
 // Popover containing a PickDateTime
 const SelectDateTime: React.FC<
   Omit<PickDateTimeProps, "timestamp"> & {
-    align?: "center" | "start" | "end";
     initialTimestamp?: Date;
+    align?: "center" | "start" | "end";
   }
 > = ({
   initialTimestamp,
+  align = "start",
   quickOptions,
   showTimezone,
   onSelect,
-  align = "start",
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [timestamp, setTimestamp] = useState<Date | undefined>(

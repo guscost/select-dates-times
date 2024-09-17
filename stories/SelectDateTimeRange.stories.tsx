@@ -17,10 +17,10 @@ export default {
   },
 } as Meta;
 
-const Template: StoryFn<any> = (args) => {
+const Template: StoryFn<typeof SelectDateTimeRange> = (args) => {
   const [range, setRange] = useState<DateRange>();
 
-  return args.render === "picker" ? (
+  return args["render"] === "picker" ? (
     <PickDateTimeRange
       range={range}
       quickOptions={args.quickOptions}

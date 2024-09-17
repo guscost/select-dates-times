@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rm -r ./dist && tsc -p ./tsconfig.build.json",
+    "build": "rm -rf ./dist && tsc -p ./tsconfig.build.json",
     "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "storybook dev -p 6006",
