@@ -97,8 +97,10 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
               }
               onChange={(e) => {
                 const value = dayjs(e.target.value).toDate();
-                setMonth(value);
-                onSelect(value);
+                if (dayjs(value).isValid()) {
+                  setMonth(value);
+                  onSelect(value);
+                }
               }}
               onClick={initializeTimestamp}
               onFocus={initializeTimestamp}

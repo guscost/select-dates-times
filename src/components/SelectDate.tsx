@@ -99,11 +99,13 @@ export const PickDate: React.FC<PickDateProps> = ({
                   "cursor-text px-3 sm:px-4 w-[100px] sm:w-[120px] text-xs sm:text-sm",
                   !date && "text-transparent",
                 )}
-                value={date ? dayjs(date).format("YYYY-MM-DDTHH:mm") : ""}
+                value={date ? dayjs(date).format("YYYY-MM-DD") : ""}
                 onChange={(e) => {
                   const value = dayjs(e.target.value).toDate();
-                  setMonth(value);
-                  onSelect(value);
+                  if (dayjs(value).isValid()) {
+                    setMonth(value);
+                    onSelect(value);
+                  }
                 }}
                 onClick={initializeDate}
                 onFocus={initializeDate}

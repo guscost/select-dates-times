@@ -93,11 +93,13 @@ export const PickDateRange: React.FC<PickDateRangeProps> = ({
                 }
                 onChange={(e) => {
                   const value = dayjs(e.target.value).toDate();
-                  setMonth(value);
-                  onSelect({
-                    from: value,
-                    to: range?.to && value > range.to ? value : range?.to,
-                  });
+                  if (dayjs(value).isValid()) {
+                    setMonth(value);
+                    onSelect({
+                      from: value,
+                      to: range?.to && value > range.to ? value : range?.to,
+                    });
+                  }
                 }}
                 onClick={initializeRange}
                 onFocus={initializeRange}
@@ -115,12 +117,14 @@ export const PickDateRange: React.FC<PickDateRangeProps> = ({
                 value={range?.to ? dayjs(range?.to).format("YYYY-MM-DD") : ""}
                 onChange={(e) => {
                   const value = dayjs(e.target.value).toDate();
-                  setMonth(value);
-                  onSelect({
-                    to: value,
-                    from:
-                      range?.from && value < range.from ? value : range?.from,
-                  });
+                  if (dayjs(value).isValid()) {
+                    setMonth(value);
+                    onSelect({
+                      to: value,
+                      from:
+                        range?.from && value < range.from ? value : range?.from,
+                    });
+                  }
                 }}
                 onClick={initializeRange}
                 onFocus={initializeRange}
