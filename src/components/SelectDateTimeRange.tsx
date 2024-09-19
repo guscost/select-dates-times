@@ -9,7 +9,7 @@ import { Button } from "./ui/button";
 import { Calendar, DateRange } from "./ui/calendar_v9";
 import { Input } from "./ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { PickerInput, QuickOption } from "./SelectDate";
+import { DoneButton, PickerInput, QuickOption } from "./SelectDate";
 
 dayjs.extend(timezone);
 
@@ -182,15 +182,12 @@ const SelectDateTimeRange: React.FC<
           onSelect={setTimestampRange}
         />
         <div className="flex mt-4">
-          <button
+          <DoneButton
             onClick={() => {
               onSelect(timestampRange ?? { from: undefined });
               toggle(false);
             }}
-            className="py-2 w-full bg-primary text-white rounded-md"
-          >
-            Done
-          </button>
+          />
         </div>
       </PopoverContent>
     </Popover>

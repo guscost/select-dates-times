@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 
 import { cn } from "../lib/utils";
 import { Button } from "./ui/button";
-import { Calendar } from "./ui/calendar_v9";
+import { Calendar, NO_BORDER } from "./ui/calendar_v9";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Input } from "./ui/input";
 
@@ -27,7 +27,7 @@ export const QuickOption: React.FC<{
   return (
     <button
       tabIndex={0}
-      className={`text-xs sm:text-sm cursor-pointer select-none ${
+      className={`${NO_BORDER} focus:underline text-xs sm:text-sm cursor-pointer select-none ${
         isSelected ? "text-gray-600" : "text-gray-400 hover:text-gray-500"
       }`}
       onKeyDown={(e) => {
@@ -38,6 +38,20 @@ export const QuickOption: React.FC<{
       onClick={onSelect}
     >
       {label}
+    </button>
+  );
+};
+
+export const DoneButton: React.FC<{
+  onClick: () => void;
+}> = ({ onClick }) => {
+  return (
+    <button
+      tabIndex={0}
+      onClick={onClick}
+      className="py-2 w-full bg-primary text-white rounded-md"
+    >
+      Done
     </button>
   );
 };
@@ -169,15 +183,12 @@ const SelectDate: React.FC<
           onSelect={setDate}
         />
         <div className="flex mt-4">
-          <button
+          <DoneButton
             onClick={() => {
               onSelect(date);
               toggle(false);
             }}
-            className="py-2 w-full bg-primary text-white rounded-md"
-          >
-            Done
-          </button>
+          />
         </div>
       </PopoverContent>
     </Popover>

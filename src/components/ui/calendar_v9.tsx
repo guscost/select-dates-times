@@ -2,7 +2,9 @@
 
 import * as React from "react";
 import {
-  DateRange as WrappedDateRange,
+  Button as InnerButton,
+  ButtonProps,
+  DateRange as InnerDateRange,
   DayPicker,
   DropdownProps,
 } from "react-day-picker";
@@ -18,8 +20,11 @@ import {
   SelectValue,
 } from "./select";
 
-export type DateRange = WrappedDateRange;
+export type DateRange = InnerDateRange;
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
+
+export const NO_BORDER =
+  "ring-0 focus:ring-0 focus-visible:ring-0 shadow-none focus:shadow-none focus-visible:shadow-none outline-none focus:outline-none focus-visible:outline-none border-none focus:border-none focus-visible:border-none";
 
 // ShadCN calendar updated for react-day-picker v9 and mobile sizing
 function Calendar({
@@ -39,8 +44,8 @@ function Calendar({
           "flex -mx-3 mb-2 relative items-center text-sm font-medium",
         dropdowns: "flex",
         nav: "absolute right-0 z-50",
-        button_previous: "h-7 w-4 sm:w-6",
-        button_next: "h-7 w-4 sm:w-6",
+        button_previous: `${NO_BORDER} fill-gray-600 focus:fill-black h-7 w-4 sm:w-6`,
+        button_next: `${NO_BORDER} fill-gray-600 focus:fill-black h-7 w-4 sm:w-6`,
         chevron: "h-4 w-4 sm:w-6",
         weeks: "w-full border-collapse space-y-1",
         week: "flex w-full mt-2",
@@ -72,6 +77,9 @@ function Calendar({
         ...classNames,
       }}
       components={{
+        Button: ({ tabIndex, ...props }: ButtonProps) => {
+          return <InnerButton tabIndex={0} {...props} />;
+        },
         Dropdown: ({ value, options, onChange, ...props }: DropdownProps) => {
           const selected = options?.find((option) => option.value === value);
           const handleChange = (value: string) => {
@@ -89,7 +97,7 @@ function Calendar({
             >
               <SelectTrigger
                 tabIndex={0}
-                className="pr-0 -mr-3 sm:-mr-2.5 h-7 ring-0 focus:ring-0 shadow-none focus:shadow-none border-none focus:border-none"
+                className={`${NO_BORDER} focus:underline pr-0 -mr-3 sm:-mr-2.5 h-7`}
               >
                 <SelectValue>{selected?.label}</SelectValue>
               </SelectTrigger>
