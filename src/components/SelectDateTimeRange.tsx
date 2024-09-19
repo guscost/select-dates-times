@@ -184,7 +184,7 @@ const SelectDateTimeRange: React.FC<
         <div className="flex mt-4">
           <DoneButton
             onClick={() => {
-              onSelect(timestampRange ?? { from: undefined });
+              onSelect(timestampRange);
               toggle(false);
             }}
           />

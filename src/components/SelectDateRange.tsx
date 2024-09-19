@@ -172,7 +172,7 @@ const SelectDateRange: React.FC<
         <div className="flex mt-4">
           <DoneButton
             onClick={() => {
-              onSelect(dateRange ?? { from: undefined });
+              onSelect(dateRange);
               toggle(false);
             }}
           />

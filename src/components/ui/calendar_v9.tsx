@@ -36,6 +36,7 @@ function Calendar({
 }: CalendarProps) {
   return (
     <DayPicker
+      hideNavigation={false}
       showOutsideDays={showOutsideDays}
       className={className}
       classNames={{
