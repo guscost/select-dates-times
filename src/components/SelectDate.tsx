@@ -19,6 +19,29 @@ export const PickerInput: React.FC<{
   </>
 );
 
+export const QuickOption: React.FC<{
+  label: string;
+  isSelected: boolean;
+  onSelect: () => void;
+}> = ({ label, isSelected, onSelect }) => {
+  return (
+    <button
+      tabIndex={0}
+      className={`text-xs sm:text-sm cursor-pointer select-none ${
+        isSelected ? "text-gray-600" : "text-gray-400 hover:text-gray-500"
+      }`}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          onSelect();
+        }
+      }}
+      onClick={onSelect}
+    >
+      {label}
+    </button>
+  );
+};
+
 export type PickDateProps = {
   date?: Date;
   quickOptions?: Array<{ label: string; date: Date }>;
@@ -56,20 +79,15 @@ export const PickDate: React.FC<PickDateProps> = ({
           <div className="text-sm mb-1 font-medium">Quick Options</div>
           <div className="flex gap-3 flex-wrap">
             {quickOptions.map((option, idx) => (
-              <div
+              <QuickOption
                 key={idx}
-                className={`text-xs sm:text-sm font-medium cursor-pointer ${
-                  date === option.date
-                    ? "text-gray-600"
-                    : "text-gray-400 hover:text-gray-500"
-                }`}
-                onClick={() => {
+                label={option.label}
+                isSelected={date === option.date}
+                onSelect={() => {
                   onSelect(option.date);
                   setMonth(option.date);
                 }}
-              >
-                {option.label}
-              </div>
+              />
             ))}
           </div>
         </div>

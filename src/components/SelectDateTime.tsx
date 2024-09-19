@@ -9,7 +9,7 @@ import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar_v9";
 import { Input } from "./ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { PickerInput } from "./SelectDate";
+import { PickerInput, QuickOption } from "./SelectDate";
 
 dayjs.extend(timezone);
 
@@ -50,20 +50,15 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
           <div className="text-sm mb-1 font-medium">Quick Options</div>
           <div className="flex gap-3 flex-wrap">
             {quickOptions.map((option, idx) => (
-              <div
+              <QuickOption
                 key={idx}
-                className={`text-xs sm:text-sm font-medium cursor-pointer ${
-                  timestamp === option.timestamp
-                    ? "text-gray-600"
-                    : "text-gray-400 hover:text-gray-500"
-                }`}
-                onClick={() => {
+                label={option.label}
+                isSelected={timestamp === option.timestamp}
+                onSelect={() => {
                   onSelect(option.timestamp);
                   setMonth(option.timestamp);
                 }}
-              >
-                {option.label}
-              </div>
+              />
             ))}
           </div>
         </div>

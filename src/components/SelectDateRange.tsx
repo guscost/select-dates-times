@@ -8,7 +8,7 @@ import { Button } from "./ui/button";
 import { Calendar, DateRange } from "./ui/calendar_v9";
 import { Input } from "./ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { PickerInput } from "./SelectDate";
+import { PickerInput, QuickOption } from "./SelectDate";
 
 export type PickDateRangeProps = {
   range?: DateRange;
@@ -44,21 +44,18 @@ export const PickDateRange: React.FC<PickDateRangeProps> = ({
           <div className="text-sm mb-1 font-medium">Quick Options</div>
           <div className="flex gap-3 flex-wrap">
             {quickOptions.map((option, idx) => (
-              <div
+              <QuickOption
                 key={idx}
-                className={`text-xs sm:text-sm font-medium cursor-pointer ${
+                label={option.label}
+                isSelected={
                   range?.from === option.range?.from &&
                   range?.to === option.range?.to
-                    ? "text-gray-600"
-                    : "text-gray-400 hover:text-gray-500"
-                }`}
-                onClick={() => {
+                }
+                onSelect={() => {
                   onSelect(option.range);
                   setMonth(option.range.from);
                 }}
-              >
-                {option.label}
-              </div>
+              />
             ))}
           </div>
         </div>
@@ -84,6 +81,7 @@ export const PickDateRange: React.FC<PickDateRangeProps> = ({
             <PickerInput label="From Date">
               <Input
                 type="date"
+                tabIndex={0}
                 className={cn(
                   "cursor-text px-3 sm:px-4 w-[100px] sm:w-[120px] text-xs sm:text-sm",
                   !range?.from && "text-transparent",
@@ -110,6 +108,7 @@ export const PickDateRange: React.FC<PickDateRangeProps> = ({
             <PickerInput label="To Date">
               <Input
                 type="date"
+                tabIndex={0}
                 className={cn(
                   "cursor-text px-3 sm:px-4 w-[100px] sm:w-[120px] text-xs sm:text-sm",
                   !range?.to && "text-transparent",
