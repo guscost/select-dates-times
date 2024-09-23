@@ -2,8 +2,10 @@
 
 import * as React from "react";
 import {
-  Button as InnerButton,
-  ButtonProps,
+  PreviousMonthButton,
+  PreviousMonthButtonProps,
+  NextMonthButton,
+  NextMonthButtonProps,
   DateRange as InnerDateRange,
   DayPicker,
   DropdownProps,
@@ -45,9 +47,10 @@ function Calendar({
           "flex -mx-3 mb-2 relative items-center text-sm font-medium",
         dropdowns: "flex",
         nav: "absolute right-0 z-50",
-        button_previous: `${NO_BORDER} fill-gray-600 focus:fill-black h-7 w-4 sm:w-6`,
-        button_next: `${NO_BORDER} fill-gray-600 focus:fill-black h-7 w-4 sm:w-6`,
-        chevron: "h-4 w-4 sm:w-6",
+        button_previous: `${NO_BORDER} group h-7 w-4 sm:w-6`,
+        button_next: `${NO_BORDER} group h-7 w-4 sm:w-6`,
+        chevron:
+          "border-b border-transparent group-focus:border-current h-4 w-4",
         weeks: "w-full border-collapse space-y-1",
         week: "flex w-full mt-2",
         weekdays: "flex",
@@ -78,8 +81,37 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        Button: ({ tabIndex, ...props }: ButtonProps) => {
-          return <InnerButton tabIndex={0} {...props} />;
+        PreviousMonthButton: ({
+          tabIndex,
+          className,
+          ...props
+        }: PreviousMonthButtonProps) => {
+          return (
+            <PreviousMonthButton
+              tabIndex={0}
+              className={cn(
+                className,
+                "focus:underline focus:underline-offset-2",
+              )}
+              {...props}
+            />
+          );
+        },
+        NextMonthButton: ({
+          tabIndex,
+          className,
+          ...props
+        }: NextMonthButtonProps) => {
+          return (
+            <NextMonthButton
+              tabIndex={0}
+              className={cn(
+                className,
+                "focus:underline focus:underline-offset-2",
+              )}
+              {...props}
+            />
+          );
         },
         Dropdown: ({ value, options, onChange, ...props }: DropdownProps) => {
           const selected = options?.find((option) => option.value === value);
@@ -98,7 +130,7 @@ function Calendar({
             >
               <SelectTrigger
                 tabIndex={0}
-                className={`${NO_BORDER} focus:underline pr-0 -mr-3 sm:-mr-2.5 h-7`}
+                className={`${NO_BORDER} focus:underline focus:underline-offset-2 pr-0 -mr-3 sm:-mr-2.5 h-7`}
               >
                 <SelectValue>{selected?.label}</SelectValue>
               </SelectTrigger>
