@@ -59,6 +59,11 @@
   }
 }
 
+/* Hide the native calendar pickers */
+::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
 /* TODO: Look for a standard way to position like this */
 .sb-show-main {
   align-items: flex-start !important;

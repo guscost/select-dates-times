@@ -4,7 +4,7 @@ Select UI for dates and times, on desktop or mobile, with ShadCN
 
 ## Demo
 
-https://guscost.github.io/select-dates-times/storybook-static/
+https://guscost.github.io/select-dates-times/storybook-static/?path=/story/components-selectdatetimerange--picker
 
 ## Installation
 
