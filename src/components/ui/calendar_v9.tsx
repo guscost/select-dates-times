@@ -46,9 +46,10 @@ function Calendar({
         month_caption:
           "flex -mx-3 mb-2 relative items-center text-sm font-medium",
         dropdowns: "flex",
+        years_dropdown: "after:none",
         nav: "absolute right-0 z-50",
-        button_previous: `${NO_BORDER} group h-7 w-4 sm:w-6`,
-        button_next: `${NO_BORDER} group h-7 w-4 sm:w-6`,
+        button_previous: cn(NO_BORDER, "group h-7 w-4 sm:w-6"),
+        button_next: cn(NO_BORDER, "group h-7 w-4 sm:w-6"),
         chevron:
           "border-b border-transparent group-focus:border-current h-4 w-4",
         weeks: "w-full border-collapse space-y-1",
@@ -130,7 +131,10 @@ function Calendar({
             >
               <SelectTrigger
                 tabIndex={0}
-                className={`${NO_BORDER} focus:underline focus:underline-offset-2 pr-0 -mr-3 sm:-mr-2.5 h-7`}
+                className={cn(
+                  NO_BORDER,
+                  "focus:underline focus:underline-offset-2 [&>svg]:opacity-25 [&>svg]:-ml-0.5 pr-0 -mr-2 sm:-mr-2.5 h-7",
+                )}
               >
                 <SelectValue>{selected?.label}</SelectValue>
               </SelectTrigger>
