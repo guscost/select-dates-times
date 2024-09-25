@@ -83,7 +83,7 @@ export const PickDateRange: React.FC<PickDateRangeProps> = ({
                 type="date"
                 tabIndex={0}
                 className={cn(
-                  "cursor-text px-3 sm:px-4 w-[100px] sm:w-[120px] text-xs sm:text-sm",
+                  "cursor-text px-2 sm:px-3 w-[100px] sm:w-[120px] text-xs sm:text-sm",
                   !range?.from && "text-transparent",
                 )}
                 value={

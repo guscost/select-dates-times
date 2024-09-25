@@ -128,7 +128,7 @@ export const PickDate: React.FC<PickDateProps> = ({
               <Input
                 type="date"
                 className={cn(
-                  "cursor-text px-3 sm:px-4 w-[100px] sm:w-[120px] text-xs sm:text-sm",
+                  "cursor-text px-2 sm:px-3 w-[100px] sm:w-[120px] text-xs sm:text-sm",
                   !date && "text-transparent",
                 )}
                 value={date ? dayjs(date).format("YYYY-MM-DD") : ""}

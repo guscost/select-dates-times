@@ -84,7 +84,7 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
             <Input
               type="datetime-local"
               className={cn(
-                "cursor-text px-3 sm:px-4 w-[168px] sm:w-[194px] text-xs sm:text-sm",
+                "cursor-text px-2 sm:px-3 w-[168px] sm:w-[194px] text-xs sm:text-sm",
                 !timestamp && "text-transparent",
               )}
               value={
