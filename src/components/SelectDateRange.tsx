@@ -66,7 +66,10 @@ export const PickDateRange: React.FC<PickDateRangeProps> = ({
           month={month}
           onMonthChange={setMonth}
           selected={range}
-          onSelect={onSelect}
+          onSelect={(range) => {
+            onSelect(range);
+            setMonth(range.to || range.from);
+          }}
           numberOfMonths={2}
           captionLayout="dropdown"
           startMonth={EARLIEST_DATE}

@@ -69,7 +69,10 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
           month={month}
           onMonthChange={setMonth}
           selected={timestamp}
-          onSelect={onSelect}
+          onSelect={(timestamp) => {
+            onSelect(timestamp);
+            setMonth(timestamp);
+          }}
           numberOfMonths={numberOfMonths || 1}
           captionLayout="dropdown"
           startMonth={EARLIEST_DATE}
