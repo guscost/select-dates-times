@@ -149,7 +149,14 @@ function Calendar({
         hidden: "invisible",
         ...classNames,
       }}
-      components={CUSTOM_COMPONENTS}
+      components={
+        components
+          ? {
+              ...CUSTOM_COMPONENTS,
+              ...components,
+            }
+          : CUSTOM_COMPONENTS
+      }
       {...props}
     />
   );
