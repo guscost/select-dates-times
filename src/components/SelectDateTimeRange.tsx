@@ -75,7 +75,11 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
           selected={range}
           onSelect={(range) => {
             onSelect(range);
-            setMonth(range?.to || range?.from);
+            setMonth(
+              range?.to
+                ? dayjs(range.to).subtract(1, "month").toDate()
+                : range?.from,
+            );
           }}
           numberOfMonths={2}
           captionLayout="dropdown"
