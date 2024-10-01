@@ -8,7 +8,14 @@ import { Button } from "./ui/button";
 import { Calendar, DateRange } from "./ui/calendar_v9";
 import { Input } from "./ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { DoneButton, PickerInput, QuickOption } from "./SelectDate";
+import {
+  DoneButton,
+  EARLIEST_DATE,
+  LATEST_DATE,
+  PickerInput,
+  PREVENT_DEFAULT,
+  QuickOption,
+} from "./SelectDate";
 
 export type PickDateRangeProps = {
   range?: DateRange;
@@ -16,9 +23,6 @@ export type PickDateRangeProps = {
   showInputs?: boolean;
   onSelect: (range: DateRange | undefined) => void;
 };
-
-const EARLIEST_DATE = new Date(1900, 0, 1);
-const LATEST_DATE = new Date(2199, 11, 31);
 
 export const PickDateRange: React.FC<PickDateRangeProps> = ({
   range,
@@ -29,7 +33,6 @@ export const PickDateRange: React.FC<PickDateRangeProps> = ({
   const [month, setMonth] = useState(range?.from);
 
   function initializeRange(e) {
-    e.preventDefault();
     if (!range) {
       const to = dayjs().startOf("day").toDate();
       const from = dayjs(to).subtract(7, "days").toDate();
@@ -102,8 +105,9 @@ export const PickDateRange: React.FC<PickDateRangeProps> = ({
                     });
                   }
                 }}
-                onClick={initializeRange}
-                onFocus={initializeRange}
+                onMouseDown={initializeRange}
+                onFocus={PREVENT_DEFAULT}
+                onClick={PREVENT_DEFAULT}
               />
             </PickerInput>
           </div>
@@ -128,8 +132,9 @@ export const PickDateRange: React.FC<PickDateRangeProps> = ({
                     });
                   }
                 }}
-                onClick={initializeRange}
-                onFocus={initializeRange}
+                onMouseDown={initializeRange}
+                onFocus={PREVENT_DEFAULT}
+                onClick={PREVENT_DEFAULT}
               />
             </PickerInput>
           </div>

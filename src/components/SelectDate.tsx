@@ -9,6 +9,11 @@ import { Calendar, NO_BORDER } from "./ui/calendar_v9";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Input } from "./ui/input";
 
+export const EARLIEST_DATE = new Date(1900, 0, 1);
+export const LATEST_DATE = new Date(2199, 11, 31);
+export const PREVENT_DEFAULT: React.EventHandler<React.SyntheticEvent> = (e) =>
+  e.preventDefault();
+
 export const PickerInput: React.FC<{
   label: string;
   children: React.ReactNode;
@@ -65,9 +70,6 @@ export type PickDateProps = {
   onSelect: (date: Date | undefined) => void;
 };
 
-const EARLIEST_DATE = new Date(1900, 0, 1);
-const LATEST_DATE = new Date(2199, 11, 31);
-
 export const PickDate: React.FC<PickDateProps> = ({
   date,
   quickOptions,
@@ -79,7 +81,6 @@ export const PickDate: React.FC<PickDateProps> = ({
   const [month, setMonth] = useState(date);
 
   function initializeDate(e) {
-    e.preventDefault();
     if (!date) {
       const today = dayjs().startOf("day").toDate();
       onSelect(today);
@@ -142,8 +143,9 @@ export const PickDate: React.FC<PickDateProps> = ({
                     onSelect(value);
                   }
                 }}
-                onClick={initializeDate}
-                onFocus={initializeDate}
+                onMouseDown={initializeDate}
+                onFocus={PREVENT_DEFAULT}
+                onClick={PREVENT_DEFAULT}
               />
             </PickerInput>
           </div>

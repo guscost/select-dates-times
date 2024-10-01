@@ -9,7 +9,14 @@ import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar_v9";
 import { Input } from "./ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { DoneButton, PickerInput, QuickOption } from "./SelectDate";
+import {
+  DoneButton,
+  EARLIEST_DATE,
+  LATEST_DATE,
+  PickerInput,
+  PREVENT_DEFAULT,
+  QuickOption,
+} from "./SelectDate";
 
 dayjs.extend(timezone);
 
@@ -22,9 +29,6 @@ export type PickDateTimeProps = {
   onSelect: (datetime: Date | undefined) => void;
 };
 
-const EARLIEST_DATE = new Date(1900, 0, 1);
-const LATEST_DATE = new Date(2199, 11, 31);
-
 export const PickDateTime: React.FC<PickDateTimeProps> = ({
   timestamp,
   quickOptions,
@@ -36,7 +40,6 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
   const [month, setMonth] = useState(timestamp);
 
   function initializeTimestamp(e) {
-    e.preventDefault();
     if (!timestamp) {
       const now = dayjs().toDate();
       onSelect(now);
@@ -100,8 +103,9 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
                   onSelect(value);
                 }
               }}
-              onClick={initializeTimestamp}
-              onFocus={initializeTimestamp}
+              onMouseDown={initializeTimestamp}
+              onFocus={PREVENT_DEFAULT}
+              onClick={PREVENT_DEFAULT}
             />
           </PickerInput>
         </div>
