@@ -28,6 +28,74 @@ export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 export const NO_BORDER =
   "ring-0 focus:ring-0 focus-visible:ring-0 shadow-none focus:shadow-none focus-visible:shadow-none outline-none focus:outline-none focus-visible:outline-none border-none focus:border-none focus-visible:border-none";
 
+const CUSTOM_COMPONENTS = {
+  PreviousMonthButton: ({
+    tabIndex,
+    className,
+    ...props
+  }: PreviousMonthButtonProps) => {
+    return (
+      <PreviousMonthButton
+        tabIndex={0}
+        className={cn(className, "focus:underline focus:underline-offset-2")}
+        {...props}
+      />
+    );
+  },
+  NextMonthButton: ({
+    tabIndex,
+    className,
+    ...props
+  }: NextMonthButtonProps) => {
+    return (
+      <NextMonthButton
+        tabIndex={0}
+        className={cn(className, "focus:underline focus:underline-offset-2")}
+        {...props}
+      />
+    );
+  },
+  Dropdown: ({ value, options, onChange, ...props }: DropdownProps) => {
+    const selected = options?.find((option) => option.value === value);
+    const handleChange = (value: string) => {
+      const changeEvent = {
+        target: { value },
+      } as React.ChangeEvent<HTMLSelectElement>;
+      onChange?.(changeEvent);
+    };
+    return (
+      <Select
+        value={value?.toString()}
+        onValueChange={(value) => {
+          handleChange(value);
+        }}
+      >
+        <SelectTrigger
+          tabIndex={0}
+          className={cn(
+            NO_BORDER,
+            "focus:underline focus:underline-offset-2 pr-0 -mr-3 sm:-mr-2.5 h-7 [&>svg]:opacity-25 [&>svg]:-ml-0.5",
+          )}
+        >
+          <SelectValue>{selected?.label}</SelectValue>
+        </SelectTrigger>
+        <SelectContent position="popper">
+          <ScrollArea className="h-80">
+            {options?.map((option, id: number) => (
+              <SelectItem
+                key={`${option.value}-${id}`}
+                value={option.value?.toString() ?? ""}
+              >
+                {option.label}
+              </SelectItem>
+            ))}
+          </ScrollArea>
+        </SelectContent>
+      </Select>
+    );
+  },
+};
+
 // ShadCN calendar updated for react-day-picker v9 and mobile sizing
 function Calendar({
   className,
@@ -81,80 +149,7 @@ function Calendar({
         hidden: "invisible",
         ...classNames,
       }}
-      components={{
-        PreviousMonthButton: ({
-          tabIndex,
-          className,
-          ...props
-        }: PreviousMonthButtonProps) => {
-          return (
-            <PreviousMonthButton
-              tabIndex={0}
-              className={cn(
-                className,
-                "focus:underline focus:underline-offset-2",
-              )}
-              {...props}
-            />
-          );
-        },
-        NextMonthButton: ({
-          tabIndex,
-          className,
-          ...props
-        }: NextMonthButtonProps) => {
-          return (
-            <NextMonthButton
-              tabIndex={0}
-              className={cn(
-                className,
-                "focus:underline focus:underline-offset-2",
-              )}
-              {...props}
-            />
-          );
-        },
-        Dropdown: ({ value, options, onChange, ...props }: DropdownProps) => {
-          const selected = options?.find((option) => option.value === value);
-          const handleChange = (value: string) => {
-            const changeEvent = {
-              target: { value },
-            } as React.ChangeEvent<HTMLSelectElement>;
-            onChange?.(changeEvent);
-          };
-          return (
-            <Select
-              value={value?.toString()}
-              onValueChange={(value) => {
-                handleChange(value);
-              }}
-            >
-              <SelectTrigger
-                tabIndex={0}
-                className={cn(
-                  NO_BORDER,
-                  "focus:underline focus:underline-offset-2 pr-0 -mr-3 sm:-mr-2.5 h-7 [&>svg]:opacity-25 [&>svg]:-ml-0.5",
-                )}
-              >
-                <SelectValue>{selected?.label}</SelectValue>
-              </SelectTrigger>
-              <SelectContent position="popper">
-                <ScrollArea className="h-80">
-                  {options?.map((option, id: number) => (
-                    <SelectItem
-                      key={`${option.value}-${id}`}
-                      value={option.value?.toString() ?? ""}
-                    >
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </ScrollArea>
-              </SelectContent>
-            </Select>
-          );
-        },
-        ...components,
-      }}
+      components={CUSTOM_COMPONENTS}
       {...props}
     />
   );
