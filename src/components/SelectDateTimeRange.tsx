@@ -73,10 +73,11 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
           month={month}
           onMonthChange={setMonth}
           selected={range}
-          onSelect={(range) => {
+          onSelect={(range, triggerDate) => {
             onSelect(range);
             setMonth(
-              range?.to && range.to !== range.from
+              range?.to === triggerDate &&
+                dayjs(range.to).diff(dayjs(range.from), "months") > 1
                 ? dayjs(range.to).subtract(1, "month").toDate()
                 : range?.from,
             );
