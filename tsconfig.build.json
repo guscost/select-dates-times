@@ -4,12 +4,15 @@
     "baseUrl": ".",
     "outDir": "./dist",
     "esModuleInterop": true,
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "skipLibCheck": true,
     "strict": true,
     "declaration": true,
     "noImplicitAny": false,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "paths": {
+      "@/*": ["src/*", "src/*/index"]
+    }
   }
 }
