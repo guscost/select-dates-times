@@ -40,12 +40,12 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
   const [month, setMonth] = useState(range?.from);
 
   function initializeRange(e) {
-    e.preventDefault();
     if (!range) {
       const to = dayjs().toDate();
       const from = dayjs(to).subtract(7, "days").toDate();
       onSelect({ from, to });
     }
+    e.target.focus();
   }
 
   return (

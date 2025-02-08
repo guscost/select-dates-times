@@ -48,6 +48,7 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
       const now = dayjs().toDate();
       onSelect(now);
     }
+    e.target.focus();
   }
 
   return (

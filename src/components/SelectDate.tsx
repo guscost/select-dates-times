@@ -89,6 +89,7 @@ export const PickDate: React.FC<PickDateProps> = ({
       const today = dayjs().startOf("day").toDate();
       onSelect(today);
     }
+    e.target.focus();
   }
 
   return (

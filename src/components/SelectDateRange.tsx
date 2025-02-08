@@ -42,6 +42,7 @@ export const PickDateRange: React.FC<PickDateRangeProps> = ({
       const from = dayjs(to).subtract(7, "days").toDate();
       onSelect({ from, to });
     }
+    e.target.focus();
   }
 
   return (
