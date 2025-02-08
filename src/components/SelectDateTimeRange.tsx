@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { CalendarIcon } from "lucide-react";
 
 import dayjs from "dayjs";
@@ -31,13 +31,15 @@ export type PickDateTimeRangeProps = {
   onSelect: (range: DateRange | undefined) => void;
 };
 
-export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
+export const PickDateTimeRange: FC<PickDateTimeRangeProps> = ({
   range,
   quickOptions,
   showTimezone,
   onSelect,
 }) => {
   const [month, setMonth] = useState(range?.from);
+  const [fromInput, setFromInput] = useState<string>();
+  const [toInput, setToInput] = useState<string>();
 
   function initializeRange(e) {
     if (!range) {
@@ -47,6 +49,13 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
     }
     e.target.focus();
   }
+
+  useEffect(() => {
+    setFromInput(
+      range?.from ? dayjs(range.from).format("YYYY-MM-DDTHH:mm") : "",
+    );
+    setToInput(range?.to ? dayjs(range.to).format("YYYY-MM-DDTHH:mm") : "");
+  }, [range]);
 
   return (
     <>
@@ -103,10 +112,9 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
                 "cursor-text px-2 sm:px-3 w-[168px] sm:w-[194px] text-xs sm:text-sm",
                 !range?.from && "text-transparent",
               )}
-              value={
-                range?.from ? dayjs(range?.from).format("YYYY-MM-DDTHH:mm") : ""
-              }
-              onChange={(e) => {
+              value={fromInput}
+              onChange={(e) => setFromInput(e.target.value)}
+              onBlur={(e) => {
                 const value = dayjs(e.target.value).toDate();
                 if (dayjs(value).isValid()) {
                   setMonth(value);
@@ -130,10 +138,9 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
                 "cursor-text px-2 sm:px-3 w-[168px] sm:w-[194px] text-xs sm:text-sm",
                 !range?.to && "text-transparent",
               )}
-              value={
-                range?.to ? dayjs(range?.to).format("YYYY-MM-DDTHH:mm") : ""
-              }
-              onChange={(e) => {
+              value={toInput}
+              onChange={(e) => setToInput(e.target.value)}
+              onBlur={(e) => {
                 const value = dayjs(e.target.value).toDate();
                 if (dayjs(value).isValid()) {
                   setMonth(value);
@@ -161,7 +168,7 @@ export const PickDateTimeRange: React.FC<PickDateTimeRangeProps> = ({
 };
 
 // Popover containing a PickDateTimeRange
-const SelectDateTimeRange: React.FC<
+const SelectDateTimeRange: FC<
   Omit<PickDateTimeRangeProps, "range"> & {
     initialRange?: DateRange;
     align: "center" | "start" | "end";

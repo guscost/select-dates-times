@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { CalendarIcon } from "lucide-react";
 
 import dayjs from "dayjs";
@@ -33,7 +33,7 @@ export type PickDateTimeProps = {
   onSelect: (datetime: Date | undefined) => void;
 };
 
-export const PickDateTime: React.FC<PickDateTimeProps> = ({
+export const PickDateTime: FC<PickDateTimeProps> = ({
   timestamp,
   quickOptions,
   numberOfMonths,
@@ -42,6 +42,7 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
   onSelect,
 }) => {
   const [month, setMonth] = useState(timestamp);
+  const [timestampInput, setTimestampInput] = useState<string>();
 
   function initializeTimestamp(e) {
     if (!timestamp) {
@@ -50,6 +51,12 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
     }
     e.target.focus();
   }
+
+  useEffect(() => {
+    setTimestampInput(
+      timestamp ? dayjs(timestamp).format("YYYY-MM-DDTHH:mm") : "",
+    );
+  }, [timestamp]);
 
   return (
     <>
@@ -98,10 +105,9 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
                 "cursor-text px-2 sm:px-3 w-[168px] sm:w-[194px] text-xs sm:text-sm",
                 !timestamp && "text-transparent",
               )}
-              value={
-                timestamp ? dayjs(timestamp).format("YYYY-MM-DDTHH:mm") : ""
-              }
-              onChange={(e) => {
+              value={timestampInput}
+              onChange={(e) => setTimestampInput(e.target.value)}
+              onBlur={(e) => {
                 const value = dayjs(e.target.value).toDate();
                 if (dayjs(value).isValid()) {
                   setMonth(value);
@@ -125,7 +131,7 @@ export const PickDateTime: React.FC<PickDateTimeProps> = ({
 };
 
 // Popover containing a PickDateTime
-const SelectDateTime: React.FC<
+const SelectDateTime: FC<
   Omit<PickDateTimeProps, "timestamp"> & {
     initialTimestamp?: Date;
     align?: "center" | "start" | "end";

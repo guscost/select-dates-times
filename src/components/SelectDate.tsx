@@ -1,4 +1,11 @@
-import React, { useState } from "react";
+import {
+  EventHandler,
+  FC,
+  ReactNode,
+  SyntheticEvent,
+  useEffect,
+  useState,
+} from "react";
 import { CalendarIcon } from "lucide-react";
 
 import dayjs from "dayjs";
@@ -15,12 +22,12 @@ import { Input } from "@/components/ui/input";
 
 export const EARLIEST_DATE = new Date(1900, 0, 1);
 export const LATEST_DATE = new Date(2199, 11, 31);
-export const PREVENT_DEFAULT: React.EventHandler<React.SyntheticEvent> = (e) =>
+export const PREVENT_DEFAULT: EventHandler<SyntheticEvent> = (e) =>
   e.preventDefault();
 
-export const PickerInput: React.FC<{
+export const PickerInput: FC<{
   label: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }> = ({ label, children }) => (
   <>
     <label className="block font-medium pb-1 text-sm">{label}</label>
@@ -28,7 +35,7 @@ export const PickerInput: React.FC<{
   </>
 );
 
-export const QuickOption: React.FC<{
+export const QuickOption: FC<{
   label: string;
   isSelected: boolean;
   onSelect: () => void;
@@ -51,7 +58,7 @@ export const QuickOption: React.FC<{
   );
 };
 
-export const DoneButton: React.FC<{
+export const DoneButton: FC<{
   onClick: () => void;
 }> = ({ onClick }) => {
   return (
@@ -74,7 +81,7 @@ export type PickDateProps = {
   onSelect: (date: Date | undefined) => void;
 };
 
-export const PickDate: React.FC<PickDateProps> = ({
+export const PickDate: FC<PickDateProps> = ({
   date,
   quickOptions,
   numberOfMonths,
@@ -83,6 +90,7 @@ export const PickDate: React.FC<PickDateProps> = ({
   onSelect,
 }) => {
   const [month, setMonth] = useState(date);
+  const [dateInput, setDateInput] = useState<string>();
 
   function initializeDate(e) {
     if (!date) {
@@ -91,6 +99,10 @@ export const PickDate: React.FC<PickDateProps> = ({
     }
     e.target.focus();
   }
+
+  useEffect(() => {
+    setDateInput(date ? dayjs(date).format("YYYY-MM-DD") : "");
+  }, [date]);
 
   return (
     <>
@@ -140,8 +152,9 @@ export const PickDate: React.FC<PickDateProps> = ({
                   "cursor-text px-2 sm:px-3 w-[100px] sm:w-[120px] text-xs sm:text-sm",
                   !date && "text-transparent",
                 )}
-                value={date ? dayjs(date).format("YYYY-MM-DD") : ""}
-                onChange={(e) => {
+                value={dateInput}
+                onChange={(e) => setDateInput(e.target.value)}
+                onBlur={(e) => {
                   const value = dayjs(e.target.value).toDate();
                   if (dayjs(value).isValid()) {
                     setMonth(value);
@@ -161,7 +174,7 @@ export const PickDate: React.FC<PickDateProps> = ({
 };
 
 // Popover containing a PickDate
-const SelectDate: React.FC<
+const SelectDate: FC<
   Omit<PickDateProps, "date"> & {
     initialDate?: Date;
     align?: "center" | "start" | "end";
