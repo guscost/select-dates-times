@@ -1,8 +1,7 @@
 {
-  "exclude": ["./*.config.ts", "./data/*", "*/*.stories.tsx"],
   "compilerOptions": {
-    "baseUrl": ".",
-    "outDir": "./dist",
+    "baseUrl": "src",
+    "outDir": "dist",
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
@@ -12,7 +11,9 @@
     "noImplicitAny": false,
     "jsx": "react-jsx",
     "paths": {
-      "@/*": ["src/*", "src/*/index"]
+      "@/*": ["*", "*/index"]
     }
-  }
+  },
+  "exclude": ["**/*.stories.tsx"],
+  "include": ["**/*.ts", "**/*.tsx"]
 }
