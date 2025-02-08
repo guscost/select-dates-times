@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
-import SelectDateTime, { PickDateTime } from "../src/components/SelectDateTime";
+import SelectDateTime, { PickDateTime } from "./SelectDateTime";
 
 /**
  * Select a date with time
@@ -14,10 +14,10 @@ export default {
   },
 } as Meta;
 
-const Template: StoryFn<typeof SelectDateTime> = (args) => {
+const Template: StoryFn<typeof SelectDateTime> = (args, context) => {
   const [timestamp, setTimestamp] = useState<Date>();
 
-  return args["render"] === "picker" ? (
+  return context.name === "Picker" ? (
     <PickDateTime
       timestamp={timestamp}
       quickOptions={args.quickOptions}
@@ -49,16 +49,12 @@ QuickOptions.args = {
   quickOptions: [
     {
       label: "7 Days Ago",
-      timestamp: now - 86400000 * 7,
+      timestamp: new Date(now - 86400000 * 7),
     },
     {
       label: "30 Days Ago",
-      timestamp: now - 86400000 * 30,
+      timestamp: new Date(now - 86400000 * 30),
     },
   ],
   showTimezone: false,
-};
-
-Picker.args = {
-  render: "picker",
 };

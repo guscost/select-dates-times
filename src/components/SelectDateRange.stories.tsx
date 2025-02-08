@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
-import { DateRange } from "../src/components/ui/calendar_v9";
-import SelectDateRange, {
-  PickDateRange,
-} from "../src/components/SelectDateRange";
+import { DateRange } from "./ui/calendar_v9";
+import SelectDateRange, { PickDateRange } from "./SelectDateRange";
 
 /**
  * Select a range of dates
@@ -17,10 +15,10 @@ export default {
   },
 } as Meta;
 
-const Template: StoryFn<typeof SelectDateRange> = (args) => {
+const Template: StoryFn<typeof SelectDateRange> = (args, context) => {
   const [range, setRange] = useState<DateRange>();
 
-  return args["render"] === "picker" ? (
+  return context.name === "Picker" ? (
     <PickDateRange
       range={range}
       quickOptions={args.quickOptions}
@@ -54,19 +52,15 @@ QuickOptions.args = {
   quickOptions: [
     {
       label: "Last Week",
-      range: { from: now - 86400000 * 7, to: now },
+      range: { from: new Date(now - 86400000 * 7), to: new Date(now) },
     },
     {
       label: "Last 30 Days",
-      range: { from: now - 86400000 * 30, to: now },
+      range: { from: new Date(now - 86400000 * 30), to: new Date(now) },
     },
   ],
 };
 
 WithInputs.args = {
   showInputs: true,
-};
-
-Picker.args = {
-  render: "picker",
 };

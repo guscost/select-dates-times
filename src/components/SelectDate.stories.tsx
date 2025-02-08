@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
-import SelectDate, { PickDate } from "../src/components/SelectDate";
+import SelectDate, { PickDate } from "./SelectDate";
 
 /**
  * Select a date
@@ -14,9 +14,9 @@ export default {
   },
 } as Meta;
 
-const Template: StoryFn<typeof SelectDate> = (args) => {
+const Template: StoryFn<typeof SelectDate> = (args, context) => {
   const [date, setDate] = useState<Date>();
-  return args["render"] === "picker" ? (
+  return context.name === "Picker" ? (
     <PickDate
       date={date}
       quickOptions={args.quickOptions}
@@ -50,20 +50,15 @@ QuickOptions.args = {
   quickOptions: [
     {
       label: "7 Days Ago",
-      date: now - 86400000 * 7,
+      date: new Date(now - 86400000 * 7),
     },
     {
       label: "30 Days Ago",
-      date: now - 86400000 * 30,
+      date: new Date(now - 86400000 * 30),
     },
   ],
-  showTimezone: false,
 };
 
 WithInput.args = {
   showInput: true,
-};
-
-Picker.args = {
-  render: "picker",
 };
